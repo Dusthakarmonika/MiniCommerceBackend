@@ -12,6 +12,9 @@ public class product {
         this.Price = Price;
         this.Stock = Stock;
     }
+    public product(){
+
+    }
     public int getProductID(){
         return productID;
     }

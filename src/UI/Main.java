@@ -10,7 +10,7 @@ public class Main {
         ProductServices productService = new ProductServices();
         System.out.println("------ WELCOME TO MINI E-COMMERCE ------");
         int option = 0;
-        while( option < 3) {
+        while( option <= 4) {
             System.out.println("Choose an option : ");
              option = sc.nextInt();
             switch (option) {
@@ -35,7 +35,22 @@ public class Main {
                     productService.displayProducts();
                     break;
 
-                case 3:
+                case 3 :
+                    System.out.println("------ SEARCH PRODUCT ------");
+                    System.out.print("Enter the product name : ");
+                    String name = sc.nextLine();
+                    product p = new product();
+                    productService.searchProduct(name,p);
+                    if(p == null){
+                        System.out.println("------ PRODUCT NOT FOUND ------");
+                    }
+                    else{
+                        System.out.println(p);
+                    }
+                    break;
+
+
+                case 4:
                     System.out.println("------ EXIT ------");
                     System.out.println("Thank you for using Mini E-Commerce");
                     break;
