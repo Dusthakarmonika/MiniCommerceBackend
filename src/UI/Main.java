@@ -8,9 +8,10 @@ public class Main {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         ProductServices productService = new ProductServices();
+        product p = new product();
         System.out.println("------ WELCOME TO MINI E-COMMERCE ------");
         int option = 0;
-        while( option <= 4) {
+        while( option <= 5) {
             System.out.println("Choose an option : ");
              option = sc.nextInt();
             switch (option) {
@@ -49,8 +50,17 @@ public class Main {
                     }
                     break;
 
+                case 4 :
+                    System.out.println("------ REMOVE THE PRODUCT ------");
+                    System.out.print("Enter the product ID : ");
+                    int pID = sc.nextInt();
+                    product p = new product();
 
-                case 4:
+
+
+
+
+                case 5:
                     System.out.println("------ EXIT ------");
                     System.out.println("Thank you for using Mini E-Commerce");
                     break;

@@ -31,5 +31,15 @@ public class ProductServices {
        return null;
 
     }
+    public boolean removeProduct(int productID, product p){
+        boolean isFound = false;
+        for(int i = list.size()-1; i >= 0; i--){
+            if(productID == list.get(i).getProductID()){
+                list.remove(list.get(i));
+                isFound = true;
+            }
+        }
+        return isFound;
+    }
 
 }
