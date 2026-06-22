@@ -8,8 +8,13 @@ public class Main {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         ProductServices productService = new ProductServices();
-        product p = new product();
         System.out.println("------ WELCOME TO MINI E-COMMERCE ------");
+        System.out.println(" OPTION 1 : Add a Product" +
+                           "\n OPTION 2 : Display the Products" +
+                           "\n OPTION 3 : Search the Product" +
+                           "\n OPTION 4 : Update the Stock" +
+                           "\n OPTION 5 : Remove the Product" +
+                           "\n OPTION 6 : Exit");
         int option = 0;
         while( option <= 5) {
             System.out.println("Choose an option : ");
@@ -40,8 +45,8 @@ public class Main {
                     System.out.println("------ SEARCH PRODUCT ------");
                     System.out.print("Enter the product name : ");
                     String name = sc.nextLine();
-                    product p = new product();
-                    productService.searchProduct(name,p);
+                    sc.nextLine();
+                    product p =  productService.searchProduct(name);
                     if(p == null){
                         System.out.println("------ PRODUCT NOT FOUND ------");
                     }
@@ -51,16 +56,33 @@ public class Main {
                     break;
 
                 case 4 :
+                    System.out.println("------ UPDATE THE STOCK OF THE PRODUCT ------");
+                    System.out.print("Enter the updated stock : ");
+                    int Stock = sc.nextInt();
+                    boolean st = productService.updateProduct(Stock);
+                    if(st == true){
+                        System.out.println("------ PRODUCT STOCK UPDATED SUCCESSFULLY ------");
+                    }
+                    else{
+                        System.out.println("------ SOCK UPDATE FAILED ------");
+                    }
+                    break;
+
+
+                case 5 :
                     System.out.println("------ REMOVE THE PRODUCT ------");
                     System.out.print("Enter the product ID : ");
                     int pID = sc.nextInt();
-                    product p = new product();
+                    boolean pro  = productService.removeProduct(pID);
+                    if(pro == true){
+                        System.out.println("------ PRODUCT SUCCESSFULLY REMOVED ------");
+                    }
+                    else{
+                        System.out.println("------ PRODUCT REMOVAL FAILED ------");
+                    }
+                    break;
 
-
-
-
-
-                case 5:
+                case 6:
                     System.out.println("------ EXIT ------");
                     System.out.println("Thank you for using Mini E-Commerce");
                     break;

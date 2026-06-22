@@ -18,20 +18,28 @@ public class ProductServices {
             System.out.println(p);
         }
     }
-    public product searchProduct(String name, product p){
+    public product searchProduct(String name){
        for(int i = 0; i < list.size(); i++){
            if(name.equalsIgnoreCase(list.get(i).getProductName())){
-               p.setProductName(list.get(i).getProductName());
-               p.setProductID(list.get(i).getProductID());
-               p.setPrice(list.get(i).getPrice());
-               p.setStock(list.get(i).getStock());
-               return p;
+              return list.get(i);
            }
        }
        return null;
 
     }
-    public boolean removeProduct(int productID, product p){
+
+    public boolean updateProduct(int stock){
+        boolean isFound = false;
+        for(product p : list){
+            if(stock == p.getStock()){
+                p.setStock(stock);
+                isFound = true;
+            }
+        }
+        return isFound;
+    }
+
+    public boolean removeProduct(int productID){
         boolean isFound = false;
         for(int i = list.size()-1; i >= 0; i--){
             if(productID == list.get(i).getProductID()){
@@ -41,5 +49,7 @@ public class ProductServices {
         }
         return isFound;
     }
+
+
 
 }
