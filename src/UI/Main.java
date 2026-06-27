@@ -1,5 +1,7 @@
 package UI;
+import model.Customer;
 import model.product;
+import services.CustomerService;
 import services.ProductServices;
 
 import java.util.*;
@@ -8,15 +10,19 @@ public class Main {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         ProductServices productService = new ProductServices();
+        CustomerService customerService = new CustomerService();
         System.out.println("------ WELCOME TO MINI E-COMMERCE ------");
         System.out.println(" OPTION 1 : Add a Product" +
                            "\n OPTION 2 : Display the Products" +
                            "\n OPTION 3 : Search the Product" +
                            "\n OPTION 4 : Update the Stock" +
                            "\n OPTION 5 : Remove the Product" +
-                           "\n OPTION 6 : Exit");
+                           "\n OPTION 6 : Add Customer" +
+                           "\n OPTION 7 : Display the customer list" +
+                           "\n OPTION 8 : Search for the Customer" +
+                           "\n OPTION 9 : Exit");
         int option = 0;
-        while( option <= 5) {
+        while( option < 9) {
             System.out.println("Choose an option : ");
              option = sc.nextInt();
             switch (option) {
@@ -82,7 +88,39 @@ public class Main {
                     }
                     break;
 
-                case 6:
+                case 6 :
+                    System.out.println("------ ADD A CUSTOMER ------");
+                    System.out.print("Enter the Customer ID : ");
+                    int customerID = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter the Customer Name : ");
+                    String customerName = sc.nextLine();
+                    System.out.print("Enter the Email ID of the customer : ");
+                    String email = sc.nextLine();
+                    Customer customer = new Customer(customerID,customerName,email );
+                    customerService.addCustomer(customer);
+                    System.out.println("------ CUSTOMER ADDED SUCCESSFULLY------");
+                    break;
+
+                case 7 :
+                    System.out.println("------ DISPLAY CUSTOMERS ------");
+                    customerService.DisplayCustomer();
+                    break;
+
+                case 8 :
+                    System.out.println("------ SEARCH FOR THE CUSTOMER ------");
+                    System.out.println("Enter the customer ID to be searched : ");
+                    int cID = sc.nextInt();
+                    Customer isFound = customerService.searchCustomer(cID);
+                    if(isFound == null){
+                        System.out.println("------ CUSTOMER NOT FOUND ------");
+                    }
+                    else{
+                        System.out.println(isFound);
+                    }
+                    break;
+
+                    case 9 :
                     System.out.println("------ EXIT ------");
                     System.out.println("Thank you for using Mini E-Commerce");
                     break;

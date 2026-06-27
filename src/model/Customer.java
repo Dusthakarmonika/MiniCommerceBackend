@@ -1,18 +1,20 @@
 package model;
 
 public class Customer {
-    private String customerID;
+    private int customerID;
     private String customerName;
     private String email;
 
-    public Customer(String customerID, String customerName, String email) {
+    public Customer(int customerID, String customerName, String email) {
         this.customerID = customerID;
         this.customerName = customerName;
         this.email = email;
     }
-    public Customer(){}
+    public Customer(){
 
-    public String getCustomerID(){
+    }
+
+    public int getCustomerID(){
         return customerID;
     }
     public String getCustomerName(){
@@ -21,7 +23,7 @@ public class Customer {
     public String getEmail(){
         return email;
     }
-    public void setCustomerID(String customerID){
+    public void setCustomerID(int customerID){
         this.customerID = customerID;
     }
     public void setCustomerName(String customerName){
@@ -32,7 +34,7 @@ public class Customer {
         this.email = email;
     }
     public String toString(){
-        return "  CustomerID : " + customerID +
+        return " CustomerID : " + customerID +
                 "\n Customer Name : " + customerName +
                 "\n Email ID : " + email ;
     }
