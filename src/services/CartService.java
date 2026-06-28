@@ -1,0 +1,28 @@
+package services;
+
+import model.CartItem;
+import model.Customer;
+import model.product;
+
+import java.util.ArrayList;
+
+public class CartService {
+    ArrayList<CartItem> list = new ArrayList<>();
+
+    public void addToCart(product Product, Customer customer, int quantity){
+       CartItem cartItem = new CartItem(Product,customer,quantity);
+       list.add(cartItem);
+    }
+
+    public void displayCart(){
+        if(list.isEmpty()){
+                System.out.println("No item is added");
+            }
+            else{
+                for(CartItem c : list){
+                    System.out.println(c);
+                }
+                }
+            }
+
+}
