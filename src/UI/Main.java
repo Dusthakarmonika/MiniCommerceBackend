@@ -1,6 +1,7 @@
 package UI;
 import model.Customer;
 import model.product;
+import services.CartService;
 import services.CustomerService;
 import services.ProductServices;
 
@@ -11,6 +12,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         ProductServices productService = new ProductServices();
         CustomerService customerService = new CustomerService();
+        CartService cartService = new CartService();
         System.out.println("------ WELCOME TO MINI E-COMMERCE ------");
         System.out.println(" OPTION 1 : Add a Product" +
                            "\n OPTION 2 : Display the Products" +
@@ -20,9 +22,11 @@ public class Main {
                            "\n OPTION 6 : Add Customer" +
                            "\n OPTION 7 : Display the customer list" +
                            "\n OPTION 8 : Search for the Customer" +
-                           "\n OPTION 9 : Exit");
+                           "\n OPTION 9 : Add to Cart" +
+                           "\n OPTION 10 : Display Cart Items" +
+                           "\n OPTION 11 : Exit" );
         int option = 0;
-        while( option < 9) {
+        while( option < 11) {
             System.out.println("Choose an option : ");
              option = sc.nextInt();
             switch (option) {
@@ -120,7 +124,32 @@ public class Main {
                     }
                     break;
 
-                    case 9 :
+                case 9:
+                    System.out.println("------ADD TO CART------");
+                    System.out.print("Enter the Customer ID : ");
+                    int CID = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter the Product name : ");
+                    String pName = sc.nextLine();
+                    System.out.print("Enter the quantity of the product : ");
+                    int quantity = sc.nextInt();
+                    product pd = productService.searchProduct(pName);
+                    Customer c = customerService.searchCustomer(CID);
+                    if(pd != null && c != null) {
+                        cartService.addToCart(pd, c, quantity);
+                        System.out.println("------ADDED TO CART SUCCESSFULLY------");
+                    }
+                    else{
+                        System.out.println("------INVALID PRODUCT OR CUSTOMER------");
+                    }
+                    break;
+
+                case 10 :
+                    System.out.println("------DISPLAY CART ITEMS------");
+                    cartService.displayCart();
+                    break;
+
+                    case 11 :
                     System.out.println("------ EXIT ------");
                     System.out.println("Thank you for using Mini E-Commerce");
                     break;

@@ -32,8 +32,8 @@ public class CartItem {
         this.quantity = quantity;
     }
     public String toString(){
-        return "  Product : " + Product +
-                "\n Customer : " + customer +
+        return "  Product : " + Product.getProductName() +
+                "\n Customer : " + customer.getCustomerName() +
                 "\n Quantity : " + quantity;
     }
 }
