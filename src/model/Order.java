@@ -14,6 +14,9 @@ public class Order {
         this.items = items;
         this.totalAmount = totalAmount;
     }
+    public Order(){
+
+    }
     public int getOrderId(){
         return orderId;
     }
