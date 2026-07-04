@@ -146,7 +146,12 @@ public class Main {
 
                 case 10 :
                     System.out.println("------DISPLAY CART ITEMS------");
-                    cartService.displayCart();
+                    System.out.println("Enter the customer ID : ");
+                    int customerId = sc.nextInt();
+                    Customer cu = new Customer();
+                    cu.setCustomerID(customerId);
+                    cartService.displayCart(cu);
+
                     break;
 
                     case 11 :

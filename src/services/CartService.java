@@ -14,15 +14,18 @@ public class CartService {
        list.add(cartItem);
     }
 
-    public void displayCart(){
+    public void displayCart(Customer customer){
         if(list.isEmpty()){
                 System.out.println("No item is added");
             }
             else{
                 for(CartItem c : list){
-                    System.out.println(c);
-                }
+                    if(c.getCustomer().getCustomerID() == customer.getCustomerID()) {
+                        System.out.println(c);
+                    }
+                    }
                 }
             }
+
 
 }
