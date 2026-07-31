@@ -8,11 +8,25 @@ import java.util.ArrayList;
 
 public class OrderService {
     ArrayList<Order> list = new ArrayList<>();
+    private CartService cartService;
 
-    public void placeOrder(Customer c,Order o){
-       if(o.getCustomer().getCustomerID() == c.getCustomerID()){
-           list.add(o);
-       }
+    public OrderService(CartService cartService){
+        this.cartService = cartService;
+    }
+
+    public double  placeOrder(Customer c){
+        ArrayList<CartItem> cart = cartService.getCartItems(c);
+        double total = 0;
+        if(cart.isEmpty()){
+            System.out.println("Your cart is Empty");
+        }
+        else{
+            for(CartItem ca : cart){
+                int itemCost = ca.getProduct().getPrice() * ca.getQuantity();
+                total = total + itemCost;
+            }
+        }
+        return total;
     }
     public void displayOrders(){
         if(list.isEmpty()){
@@ -32,4 +46,6 @@ public class OrderService {
         }
         return null;
     }
+
+
 }

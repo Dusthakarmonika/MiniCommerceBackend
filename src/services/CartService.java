@@ -26,6 +26,14 @@ public class CartService {
                     }
                 }
             }
-
+public ArrayList<CartItem> getCartItems(Customer customer){
+    ArrayList<CartItem> items = new ArrayList<>();
+        for(CartItem c : list){
+            if(c.getCustomer().equals(customer)){
+                items.add(c);
+            }
+        }
+        return items;
+}
 
 }

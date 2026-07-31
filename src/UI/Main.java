@@ -1,18 +1,18 @@
 package UI;
 import model.Customer;
+import model.Order;
 import model.product;
-import services.CartService;
-import services.CustomerService;
-import services.ProductServices;
+import services.*;
 
 import java.util.*;
-import services.ProductServices;
+
 public class Main {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         ProductServices productService = new ProductServices();
         CustomerService customerService = new CustomerService();
         CartService cartService = new CartService();
+        OrderService orderService = new OrderService(cartService);
         System.out.println("------ WELCOME TO MINI E-COMMERCE ------");
         System.out.println(" OPTION 1 : Add a Product" +
                            "\n OPTION 2 : Display the Products" +
@@ -24,7 +24,8 @@ public class Main {
                            "\n OPTION 8 : Search for the Customer" +
                            "\n OPTION 9 : Add to Cart" +
                            "\n OPTION 10 : Display Cart Items" +
-                           "\n OPTION 11 : Exit" );
+                           "\n OPTION 11 : Place Order" +
+                           "\n OPTION 12 : Exit" );
         int option = 0;
         while( option < 11) {
             System.out.println("Choose an option : ");
@@ -154,7 +155,21 @@ public class Main {
 
                     break;
 
-                    case 11 :
+                case 11 :
+                    System.out.println("------PLACE ORDER------");
+                    System.out.println("Enter the CustomerID : ");
+                    int custID = sc.nextInt();
+                    Customer cust = customerService.searchCustomer(custID);
+                    if(cust == null){
+                        System.out.println("Customer not Found");
+                    }
+                    else {
+                        double o = orderService.placeOrder(cust);
+                        System.out.println("The total Bill for the cartItems is : " + o);
+                    }
+                    break;
+
+                    case 12 :
                     System.out.println("------ EXIT ------");
                     System.out.println("Thank you for using Mini E-Commerce");
                     break;
