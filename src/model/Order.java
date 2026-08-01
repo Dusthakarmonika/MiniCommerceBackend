@@ -3,10 +3,13 @@ package model;
 import java.util.ArrayList;
 
 public class Order {
-    private int orderId;
+    private static int orderId;
     private Customer customer;
     private ArrayList<CartItem> items;
     private double totalAmount;
+    static{
+        orderId = 1000;
+    }
 
     public Order(int orderId, Customer customer, ArrayList<CartItem> items, double totalAmount){
         this.orderId = orderId;
@@ -18,7 +21,7 @@ public class Order {
 
     }
     public int getOrderId(){
-        return orderId;
+        return orderId++;
     }
     public void setOrderId(int orderId) {
         this.orderId = orderId;

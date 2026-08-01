@@ -158,16 +158,20 @@ public class Main {
                 case 11 :
                     System.out.println("------PLACE ORDER------");
                     System.out.println("Enter the CustomerID : ");
+                    double o = 0;
                     int custID = sc.nextInt();
                     Customer cust = customerService.searchCustomer(custID);
                     if(cust == null){
                         System.out.println("Customer not Found");
                     }
                     else {
-                        double o = orderService.placeOrder(cust);
-                        System.out.println("The total Bill for the cartItems is : " + o);
+                        o = orderService.placeOrder(cust);
                     }
-                    break;
+                    cartService.displayCart(cust);
+                    Order order = new Order();
+                    System.out.println("OrderId : " + order.getOrderId());
+                    System.out.println("Total Price : " + o);
+                    System.out.println("ORDER PLACED SUCCESSFULLY");
 
                     case 12 :
                     System.out.println("------ EXIT ------");
