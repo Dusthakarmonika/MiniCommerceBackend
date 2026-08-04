@@ -27,7 +27,7 @@ public class Main {
                            "\n OPTION 11 : Place Order" +
                            "\n OPTION 12 : Exit" );
         int option = 0;
-        while( option < 11) {
+        while( option < 12) {
             System.out.println("Choose an option : ");
              option = sc.nextInt();
             switch (option) {
@@ -166,12 +166,14 @@ public class Main {
                     }
                     else {
                         o = orderService.placeOrder(cust);
+                        cartService.displayCart(cust);
+                        Order order = new Order();
+                        System.out.println("OrderId : " + order.getOrderId());
+                        System.out.println("Total Price : " + o);
+                        System.out.println("ORDER PLACED SUCCESSFULLY");
                     }
-                    cartService.displayCart(cust);
-                    Order order = new Order();
-                    System.out.println("OrderId : " + order.getOrderId());
-                    System.out.println("Total Price : " + o);
-                    System.out.println("ORDER PLACED SUCCESSFULLY");
+                    cartService.removeCartItems(cust);
+                   break;
 
                     case 12 :
                     System.out.println("------ EXIT ------");

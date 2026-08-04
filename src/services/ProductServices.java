@@ -1,5 +1,7 @@
 package services;
 
+import model.CartItem;
+import model.Customer;
 import model.product;
 
 import java.util.ArrayList;

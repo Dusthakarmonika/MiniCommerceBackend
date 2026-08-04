@@ -32,6 +32,11 @@ public class OrderService {
                     total = total + itemCost;
                 }
             }
+            for(CartItem ca : cart){
+                int stock = ca.getProduct().getStock() - ca.getQuantity();
+               ca.getProduct().setStock(stock);
+
+            }
         }
         return total;
     }

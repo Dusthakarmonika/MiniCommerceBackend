@@ -1,5 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Customer {
     private int customerID;
     private String customerName;
@@ -29,6 +33,7 @@ public class Customer {
     public void setCustomerName(String customerName){
         this.customerName = customerName;
     }
+
 
     public void setEmail(String email) {
         this.email = email;
