@@ -4,6 +4,8 @@ import model.CartItem;
 import model.Customer;
 import model.Order;
 import model.product;
+import Exception.InsufficientStockException;
+import Exception.EmptyCartException;
 
 import java.util.ArrayList;
 
@@ -16,31 +18,18 @@ public class OrderService {
         this.cartService = cartService;
     }
 
-    public double  placeOrder(Customer c){
+    public double  placeOrder(Customer c) throws InsufficientStockException,EmptyCartException {
         ArrayList<CartItem> cart = cartService.getCartItems(c);
         double total = 0;
-        if(cart.isEmpty()){
-            System.out.println("Your cart is Empty");
-        }
-        else{
             for(CartItem ca : cart){
-                if(ca.getQuantity() > ca.getProduct().getStock()){
-                    System.out.println("There is no enough Stock");
+                if(ca.getProduct().getStock() < ca.getQuantity()) {
+                    throw new InsufficientStockException("Insufficient Stock");
                 }
-                else {
-                    int itemCost = ca.getProduct().getPrice() * ca.getQuantity();
+                    double itemCost = ca.getProduct().getPrice() * ca.getQuantity();
                     total = total + itemCost;
+                    int stock = ca.getProduct().getStock() - ca.getQuantity();
+                    ca.getProduct().setStock(stock);
                 }
-            }
-            for(CartItem ca : cart){
-                int stock = ca.getProduct().getStock() - ca.getQuantity();
-               ca.getProduct().setStock(stock);
-
-            }
+            return total;
         }
-        return total;
-    }
-
-
-
 }

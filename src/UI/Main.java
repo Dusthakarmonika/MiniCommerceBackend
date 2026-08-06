@@ -1,8 +1,14 @@
 package UI;
+import model.CartItem;
 import model.Customer;
 import model.Order;
 import model.product;
 import services.*;
+import Exception.ProductNotFoundException;
+import Exception.CustomerNotFoundException;
+import Exception.InsufficientStockException;
+import Exception.EmptyCartException;
+
 
 import java.util.*;
 
@@ -30,6 +36,7 @@ public class Main {
         while( option < 12) {
             System.out.println("Choose an option : ");
              option = sc.nextInt();
+             sc.nextLine();
             switch (option) {
                 case 1:
                     System.out.println("------ ADD A PRODUCT ------");
@@ -56,21 +63,22 @@ public class Main {
                     System.out.println("------ SEARCH PRODUCT ------");
                     System.out.print("Enter the product name : ");
                     String name = sc.nextLine();
-                    sc.nextLine();
+                    try{
                     product p =  productService.searchProduct(name);
-                    if(p == null){
-                        System.out.println("------ PRODUCT NOT FOUND ------");
+                        System.out.println("Product exists" + p);
                     }
-                    else{
-                        System.out.println(p);
+                    catch(ProductNotFoundException e){
+                        System.out.println(e.getMessage());
                     }
                     break;
 
                 case 4 :
                     System.out.println("------ UPDATE THE STOCK OF THE PRODUCT ------");
                     System.out.print("Enter the updated stock : ");
+                    int productId = sc.nextInt();
+                    System.out.println("Enter the productId : ");
                     int Stock = sc.nextInt();
-                    boolean st = productService.updateProduct(Stock);
+                    boolean st = productService.updateProduct(productId,Stock);
                     if(st == true){
                         System.out.println("------ PRODUCT STOCK UPDATED SUCCESSFULLY ------");
                     }
@@ -100,8 +108,12 @@ public class Main {
                     sc.nextLine();
                     System.out.print("Enter the Customer Name : ");
                     String customerName = sc.nextLine();
-                    System.out.print("Enter the Email ID of the customer : ");
-                    String email = sc.nextLine();
+                        System.out.print("Enter the Email ID of the customer : ");
+                        String email = sc.nextLine();
+                        boolean isValidEmail = customerService.validEmailId(email);
+                        if (!isValidEmail) {
+                            System.out.println("Please enter the valid EmailId");
+                        }
                     Customer customer = new Customer(customerID,customerName,email );
                     customerService.addCustomer(customer);
                     System.out.println("------ CUSTOMER ADDED SUCCESSFULLY------");
@@ -116,17 +128,18 @@ public class Main {
                     System.out.println("------ SEARCH FOR THE CUSTOMER ------");
                     System.out.println("Enter the customer ID to be searched : ");
                     int cID = sc.nextInt();
-                    Customer isFound = customerService.searchCustomer(cID);
-                    if(isFound == null){
-                        System.out.println("------ CUSTOMER NOT FOUND ------");
+                    try {
+                        Customer isFound = customerService.searchCustomer(cID);
+                        System.out.println("Customer exists : " + isFound);
                     }
-                    else{
-                        System.out.println(isFound);
+                    catch(CustomerNotFoundException e){
+                        System.out.println(e.getMessage());
                     }
                     break;
 
                 case 9:
                     System.out.println("------ADD TO CART------");
+                    CartItem cart = new CartItem();
                     System.out.print("Enter the Customer ID : ");
                     int CID = sc.nextInt();
                     sc.nextLine();
@@ -134,14 +147,16 @@ public class Main {
                     String pName = sc.nextLine();
                     System.out.print("Enter the quantity of the product : ");
                     int quantity = sc.nextInt();
-                    product pd = productService.searchProduct(pName);
-                    Customer c = customerService.searchCustomer(CID);
-                    if(pd != null && c != null) {
+                    try {
+                         product pd = productService.searchProduct(pName);
+                        Customer c = customerService.searchCustomer(CID);
                         cartService.addToCart(pd, c, quantity);
                         System.out.println("------ADDED TO CART SUCCESSFULLY------");
+
                     }
-                    else{
-                        System.out.println("------INVALID PRODUCT OR CUSTOMER------");
+                    catch(ProductNotFoundException | CustomerNotFoundException e){
+                        System.out.println(e.getMessage());
+                        return;
                     }
                     break;
 
@@ -160,19 +175,19 @@ public class Main {
                     System.out.println("Enter the CustomerID : ");
                     double o = 0;
                     int custID = sc.nextInt();
-                    Customer cust = customerService.searchCustomer(custID);
-                    if(cust == null){
-                        System.out.println("Customer not Found");
-                    }
-                    else {
+                    try {
+                        Customer cust = customerService.searchCustomer(custID);
                         o = orderService.placeOrder(cust);
                         cartService.displayCart(cust);
                         Order order = new Order();
                         System.out.println("OrderId : " + order.getOrderId());
                         System.out.println("Total Price : " + o);
                         System.out.println("ORDER PLACED SUCCESSFULLY");
+                        cartService.removeCartItems(cust);
                     }
-                    cartService.removeCartItems(cust);
+                        catch(CustomerNotFoundException | InsufficientStockException | EmptyCartException e){
+                            System.out.println(e.getMessage());
+                        }
                    break;
 
                     case 12 :

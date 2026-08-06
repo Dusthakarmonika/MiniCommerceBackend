@@ -3,6 +3,8 @@ package services;
 import model.CartItem;
 import model.Customer;
 import model.product;
+import Exception.ProductNotFoundException;
+
 
 import java.util.ArrayList;
 
@@ -15,25 +17,25 @@ public class ProductServices {
     public void displayProducts(){
         if(list.isEmpty()) {
             System.out.println("No product is added");
+            return;
         }
         for(product p : list){
             System.out.println(p);
         }
     }
-    public product searchProduct(String name){
+    public product searchProduct(String name) throws ProductNotFoundException {
        for(int i = 0; i < list.size(); i++){
-           if(name.equalsIgnoreCase(list.get(i).getProductName())){
-              return list.get(i);
+           if(name.equalsIgnoreCase(list.get(i).getProductName())) {
+               return list.get(i);
            }
        }
-       return null;
-
+       throw new ProductNotFoundException("Product not found");
     }
 
-    public boolean updateProduct(int stock){
+    public boolean updateProduct( int productId,int stock){
         boolean isFound = false;
         for(product p : list){
-            if(stock == p.getStock()){
+            if(p.getProductID() == productId) {
                 p.setStock(stock);
                 isFound = true;
             }

@@ -24,7 +24,7 @@ public class Order {
         return orderId++;
     }
     public void setOrderId(int orderId) {
-        this.orderId = orderId;
+        Order.orderId = orderId;
     }
     public Customer getCustomer() {
         return customer;
