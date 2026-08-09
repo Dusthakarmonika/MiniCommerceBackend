@@ -1,5 +1,6 @@
 package services;
 
+import Interfaces.OrderOperation;
 import model.CartItem;
 import model.Customer;
 import model.Order;
@@ -9,7 +10,7 @@ import Exception.EmptyCartException;
 
 import java.util.ArrayList;
 
-public class OrderService {
+public class OrderService implements OrderOperation {
     ArrayList<Order> list = new ArrayList<>();
     private CartService cartService;
 
@@ -17,8 +18,8 @@ public class OrderService {
     public OrderService(CartService cartService){
         this.cartService = cartService;
     }
-
-    public double  placeOrder(Customer c) throws InsufficientStockException,EmptyCartException {
+    @Override
+    public double  placeOrder(Customer c) throws InsufficientStockException,EmptyCartException  {
         ArrayList<CartItem> cart = cartService.getCartItems(c);
         double total = 0;
             for(CartItem ca : cart){

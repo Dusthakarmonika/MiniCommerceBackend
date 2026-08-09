@@ -1,11 +1,12 @@
 package services;
 
+import Interfaces.CustomerOperation;
 import model.Customer;
 
 import java.util.ArrayList;
 import Exception.CustomerNotFoundException;
 
-public class CustomerService {
+public class CustomerService implements CustomerOperation {
     ArrayList<Customer> list = new ArrayList<>();
 
     public void addCustomer(Customer customer){

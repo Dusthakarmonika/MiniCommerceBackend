@@ -1,4 +1,5 @@
 package UI;
+import Interfaces.ProductOperation;
 import model.CartItem;
 import model.Customer;
 import model.Order;
@@ -15,7 +16,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
-        ProductServices productService = new ProductServices();
+        ProductOperation productService = new ProductServices();
         CustomerService customerService = new CustomerService();
         CartService cartService = new CartService();
         OrderService orderService = new OrderService(cartService);
