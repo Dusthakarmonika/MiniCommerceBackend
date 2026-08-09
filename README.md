@@ -1,4 +1,4 @@
-# Mini E-Commerce Backend
+# 🛒 Mini E-Commerce Backend
 
 A Java-based backend application that simulates the core fundamentals of an e-commerce system. It allows users to manage products by performing CRUD (Create, Read, Update, Delete) operations using object-oriented programming principles.
 
@@ -8,143 +8,230 @@ A Java-based backend application that simulates the core fundamentals of an e-co
 
 **Progress:** ~60% Complete
 
-The project now implements product management, a customer model, a cart, and basic order placement through a CLI. Recent development added order placement, bill calculation, stock validation, cart cleanup after order, and custom exceptions.
+The project now implements product management, a customer model, a cart system, and order placement functionality through an interactive CLI. Recent development has added robust order placement, bill calculation, stock validation, and comprehensive cart management with per-customer isolation.
 
 ---
 
 ## ✅ Features Implemented
 
 ### Product Management
-- ✓ Product CRUD operations (Create, Read, Update, Delete)
-- ✓ Inventory management with stock tracking
+- ✓ Full Product CRUD operations (Create, Read, Update, Delete)
+- ✓ Comprehensive inventory management with stock tracking
 - ✓ Search products by name
 - ✓ Update product stock by product ID
 - ✓ Product data model with getters/setters
 
-### Customer
+### Customer Management
 - ✓ Customer model and CRUD utilities
 - ✓ Email validation for customer creation
 - ✓ Customer-specific cart operations
+- ✓ Persistent customer tracking
 
-### Cart & Orders
+### Shopping Cart & Orders
 - ✓ Cart model and CartService (add to cart, display cart)
-- ✓ Customer-specific cart display and removal
-- ✓ Order model and OrderService
-- ✓ Place order from customer's cart
-- ✓ Bill calculation and order id generation
-- ✓ Stock reduction when an order is placed
+- ✓ Customer-specific cart display and removal operations
+- ✓ Order model and OrderService for processing purchases
+- ✓ Place order from customer's cart with validation
+- ✓ Automatic bill calculation and order ID generation
+- ✓ Real-time stock reduction when orders are placed
 
-### Error handling
-- ✓ Custom exceptions: ProductNotFoundException, CustomerNotFoundException, InsufficientStockException, EmptyCartException
-- ✓ Try/catch handling in the CLI for common error cases
+### Error Handling & Validation
+- ✓ Custom exceptions:
+  - `ProductNotFoundException` - when product is not found
+  - `CustomerNotFoundException` - when customer is not found
+  - `InsufficientStockException` - when product stock is insufficient
+  - `EmptyCartException` - when attempting operations on empty cart
+- ✓ Try/catch handling in the CLI for seamless error management
+- ✓ Input validation for user entries
 
-### UI & Architecture
-- ✓ CLI-based user interface with menu options
-- ✓ MVC-style separation between models, services, and UI
-
----
-
-## 🎯 Recent Changes (high level)
-- Added CartItem model and CartService to collect customer cart items.
-- Made cart operations customer-specific and added display/remove cart items per customer.
-- Created Order model and OrderService with placeOrder() that: validates stock, computes total bill, reduces product stock, and returns total.
-- Added order id generation (incrementing id starting from 1000).
-- Implemented email validation for customers and improved input handling in the CLI.
-- Introduced custom exception classes and used them in services and the CLI to provide clearer error messages.
-- Updated CLI menu to support adding to cart, viewing cart by customer, placing orders and exiting.
+### Architecture & UI
+- ✓ CLI-based interactive user interface with menu-driven operations
+- ✓ MVC-style separation of concerns (Models, Services, UI)
+- ✓ Service layer pattern for business logic encapsulation
 
 ---
 
-## 🎯 Planned Features (next phases)
+## 🎯 Recent Development Milestones
 
-### Phase 2: Customer & Order Management (in progress)
-- [ ] Persist orders (order history)
-- [ ] Link customers to orders more robustly
+### Latest Updates
+- ✅ Added CartItem model and CartService for flexible cart management
+- ✅ Implemented customer-specific cart operations (add, view, remove by customer)
+- ✅ Created Order model and OrderService with comprehensive `placeOrder()` method that:
+  - Validates stock availability before order placement
+  - Computes accurate total bill amounts
+  - Automatically reduces product stock
+  - Returns comprehensive order total
+- ✅ Order ID generation with auto-incrementing system starting from 1000
+- ✅ Email validation for customers with improved input handling
+- ✅ Custom exception classes for clearer, more meaningful error messages
+- ✅ Enhanced CLI menu with intuitive navigation and options
+- ✅ MVC architecture for better code organization and maintainability
+
+---
+
+## 🎯 Planned Features (Next Phases)
+
+### Phase 2: Customer & Order Management (In Progress)
+- [ ] Persist orders in a data structure (order history)
+- [ ] Link customers to orders with stronger data relationships
+- [ ] Order status tracking (Pending, Confirmed, Shipped, Delivered)
+- [ ] Order cancellation functionality
 
 ### Phase 3: Advanced Features
-- [ ] Invoice generation
-- [ ] Payment processing
-- [ ] Role-based authentication and user management
+- [ ] Invoice generation with detailed billing information
+- [ ] Payment processing integration
+- [ ] Role-based authentication and user management (Admin, Customer, Guest)
+- [ ] Discount and coupon system
+- [ ] Product category management
 
 ### Phase 4: Persistence & API
 - [ ] Database persistence (MySQL/PostgreSQL)
-- [ ] Hibernate ORM setup
+- [ ] Hibernate ORM integration for object-relational mapping
 - [ ] REST API development with Spring Boot
 - [ ] API documentation (Swagger/OpenAPI)
+- [ ] Request validation and response formatting
 
 ### Phase 5: Quality & Testing
-- [ ] Unit tests (JUnit)
-- [ ] Integration tests
-- [ ] Input validation and more robust error handling
-- [ ] Logging and monitoring
+- [ ] Comprehensive Unit tests (JUnit 5)
+- [ ] Integration tests for service layers
+- [ ] Enhanced input validation and robust error handling
+- [ ] Logging framework integration (Log4j/SLF4J)
+- [ ] Performance monitoring and metrics
 
 ---
 
 ## 🛠️ Tech Stack
-- Language: Java
-- Architecture: MVC pattern
-- Current UI: CLI-based
-- Current data store: In-memory ArrayLists (temporary)
-- Planned: Spring Boot, Hibernate, MySQL/PostgreSQL
+
+| Component | Technology |
+|-----------|-----------|
+| **Language** | Java 8+ |
+| **Architecture** | MVC Pattern |
+| **UI** | CLI-based (Command Line Interface) |
+| **Data Store** | In-memory ArrayLists (temporary) |
+| **Planned** | Spring Boot, Hibernate, MySQL/PostgreSQL |
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Java 8 or higher
-- Maven or Gradle (optional)
+- **Java:** Version 8 or higher installed and configured in PATH
+- **Maven** (optional): For advanced project management and dependencies
+- **Gradle** (optional): Alternative build tool
 
-### Run the application (from project root)
+### Installation & Setup
 
-```bash
-javac -d bin src/**/*.java
-java -cp bin Main
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Dusthakarmonika/MiniCommerceBackend.git
+   cd MiniCommerceBackend
+   ```
+
+2. **Compile the application:**
+   ```bash
+   javac -d bin src/**/*.java
+   ```
+
+3. **Run the application:**
+   ```bash
+   java -cp bin Main
+   ```
+
+### Important Notes
+- 🔴 The application currently uses in-memory storage; all data is lost when the application exits
+- 💾 Future phases will include database persistence
+- 🧪 Use the CLI menu to interact with all features
+
+---
+
+## 📋 CLI Menu Options
+
+The application provides an interactive menu with the following operations:
+
+```
+1. Add a Product              - Create a new product with details
+2. Display Products           - View all products in the system
+3. Search Product             - Search products by name
+4. Update Product Stock       - Modify stock quantity for a product
+5. Remove Product             - Delete a product from the system
+6. Add Customer               - Register a new customer
+7. Display Customers          - View all registered customers
+8. Search Customer            - Search customers by details
+9. Add to Cart                - Add items to customer's cart
+10. Display Cart Items        - View items in customer's cart
+11. Place Order               - Create an order from cart
+12. Exit                      - Close the application
 ```
 
-Notes:
-- The application currently uses in-memory storage; all data is lost when the application exits.
-- Use the CLI menu to add products, create customers, add items to cart, view cart for a customer, place an order, and exit.
+---
+
+## 📁 Project Structure
+
+```
+MiniCommerceBackend/
+├── src/
+│   ├── models/              # Data models (Product, Customer, Cart, Order)
+│   ├── services/            # Business logic (ProductService, CartService, OrderService)
+│   ├── exceptions/          # Custom exception classes
+│   ├── ui/                  # User interface (CLI)
+��   └── Main.java           # Application entry point
+├── bin/                     # Compiled classes (generated)
+├── README.md               # This file
+└── .gitignore              # Git ignore file
+```
 
 ---
 
-## ✅ CLI Menu (current)
-- Add a Product
-- Display Products
-- Search Product
-- Update Product Stock (by productId)
-- Remove Product
-- Add Customer
-- Display Customers
-- Search Customer
-- Add to Cart (customer + product + quantity)
-- Display Cart Items (by customer ID)
-- Place Order (by customer ID)
-- Exit
+## 🤝 Contributing
 
----
+Contributions are welcome! Here's how you can help:
 
-## Contributing
-Contributions are welcome. Suggested ways to help:
-- Add unit tests (JUnit)
-- Implement DB persistence and migrations
-- Improve error handling and input validation
-- Add a REST API frontend with Spring Boot
+### Suggested Contributions
+- 🧪 Add comprehensive unit tests (JUnit 5)
+- 💾 Implement database persistence layer and migrations
+- 🛡️ Improve error handling and input validation
+- 🌐 Add REST API frontend with Spring Boot
+- 📊 Enhance logging and monitoring capabilities
+- 🎨 Improve UI with better user experience
 
-Contributing workflow:
-1. Fork the repository
-2. Create a feature branch: git checkout -b feature/your-feature
-3. Commit and push your changes
-4. Open a pull request
+### Contributing Workflow
+1. **Fork** the repository
+2. **Create a feature branch:** `git checkout -b feature/your-feature`
+3. **Commit your changes:** `git commit -m "Add your feature description"`
+4. **Push to your branch:** `git push origin feature/your-feature`
+5. **Open a Pull Request** with detailed description of changes
+
+### Code Standards
+- Follow Java naming conventions and coding standards
+- Add comments for complex logic
+- Include unit tests for new features
+- Update documentation as needed
 
 ---
 
 ## 📝 License
-This project is open source. Refer to the LICENSE file for details.
+
+This project is open source. Refer to the LICENSE file for more details.
 
 ---
 
 ## 👤 Author
+
 **Dusthakarmonika**
 
-Feel free to contribute or report issues!
+- GitHub: [@Dusthakarmonika](https://github.com/Dusthakarmonika)
+- Project: [MiniCommerceBackend](https://github.com/Dusthakarmonika/MiniCommerceBackend)
+
+Feel free to:
+- 🐛 Report issues and bugs
+- 💡 Suggest new features
+- 🙋 Ask questions or seek clarification
+- ✨ Contribute improvements
+
+---
+
+## 📞 Support & Questions
+
+For questions, issues, or suggestions, please [open an issue](https://github.com/Dusthakarmonika/MiniCommerceBackend/issues) on the repository.
+
+**Happy Coding!** 🚀
