@@ -1,36 +1,52 @@
 package services;
 
 import Interfaces.OrderOperation;
-import model.CartItem;
-import model.Customer;
-import model.Order;
-import model.product;
+import model.*;
 import Exception.InsufficientStockException;
 import Exception.EmptyCartException;
 
 import java.util.ArrayList;
 
+
 public class OrderService implements OrderOperation {
     ArrayList<Order> list = new ArrayList<>();
     private CartService cartService;
+    int choice ;
+    Payment payment;
 
 
     public OrderService(CartService cartService){
         this.cartService = cartService;
     }
     @Override
-    public double  placeOrder(Customer c) throws InsufficientStockException,EmptyCartException  {
+    public double  placeOrder(Customer c, int choice) throws InsufficientStockException,EmptyCartException {
         ArrayList<CartItem> cart = cartService.getCartItems(c);
         double total = 0;
-            for(CartItem ca : cart){
-                if(ca.getProduct().getStock() < ca.getQuantity()) {
-                    throw new InsufficientStockException("Insufficient Stock");
-                }
-                    double itemCost = ca.getProduct().getPrice() * ca.getQuantity();
-                    total = total + itemCost;
-                    int stock = ca.getProduct().getStock() - ca.getQuantity();
-                    ca.getProduct().setStock(stock);
-                }
+        for (CartItem ca : cart) {
+            if (ca.getProduct().getStock() < ca.getQuantity()) {
+                throw new InsufficientStockException("Insufficient Stock");
+            }
+        }
+        switch (choice) {
+            case 1:
+                payment = new UPIPayment();
+                break;
+            case 2:
+                payment = new CardPayment();
+                break;
+            case 3:
+                payment = new CashOnDelivery();
+                break;
+        }
+        payment.makePayment();
+        for (CartItem ca : cart) {
+            double itemCost = ca.getProduct().getPrice() * ca.getQuantity();
+            total = total + itemCost;
+        }
+        for (CartItem ca : cart) {
+            int stock = ca.getProduct().getStock() - ca.getQuantity();
+            ca.getProduct().setStock(stock);
+        }
             return total;
         }
 }

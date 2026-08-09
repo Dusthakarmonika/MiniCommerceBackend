@@ -1,9 +1,6 @@
 package UI;
 import Interfaces.ProductOperation;
-import model.CartItem;
-import model.Customer;
-import model.Order;
-import model.product;
+import model.*;
 import services.*;
 import Exception.ProductNotFoundException;
 import Exception.CustomerNotFoundException;
@@ -114,6 +111,7 @@ public class Main {
                         boolean isValidEmail = customerService.validEmailId(email);
                         if (!isValidEmail) {
                             System.out.println("Please enter the valid EmailId");
+                            break;
                         }
                     Customer customer = new Customer(customerID,customerName,email );
                     customerService.addCustomer(customer);
@@ -176,9 +174,15 @@ public class Main {
                     System.out.println("Enter the CustomerID : ");
                     double o = 0;
                     int custID = sc.nextInt();
+
                     try {
                         Customer cust = customerService.searchCustomer(custID);
-                        o = orderService.placeOrder(cust);
+                        System.out.println("Choose the Payemnt Type Option :" +
+                                "\n 1. UPI Payment" +
+                                "\n 2. Card Payment"+
+                                "3. Cash On Delivery");
+                        int choice = sc.nextInt();
+                        o = orderService.placeOrder(cust,choice);
                         cartService.displayCart(cust);
                         Order order = new Order();
                         System.out.println("OrderId : " + order.getOrderId());

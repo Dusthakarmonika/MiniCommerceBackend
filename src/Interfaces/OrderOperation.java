@@ -7,6 +7,6 @@ import Exception.EmptyCartException;
 
 
 public interface OrderOperation {
-    public double  placeOrder(Customer c) throws InsufficientStockException,EmptyCartException;
+    public double  placeOrder(Customer c, int choice) throws InsufficientStockException,EmptyCartException;
 
 }
