@@ -143,21 +143,36 @@ public class Main {
                 case 9:
                     System.out.println("------UPDATE THE CUSTOMER DETAILS------");
                     System.out.println("Enter the customer Id : ");
-                    int customerId = sc.nextInt();
+                    int custId = sc.nextInt();
                     sc.nextLine();
                     System.out.println("Enter the updated customer name: ");
                     String CN = sc.nextLine();
                     System.out.println("Enter the customer EmailID : ");
                     String Email = sc.nextLine();
                 try {
-                    customerService.updateCustomerInfo(customerId, CN, Email);
+                    customerService.validEmailId(Email);
+                    customerService.updateCustomerInfo(custId, CN, Email);
+                    System.out.println("Updated Successfully");
                 }
                 catch(CustomerNotFoundException e){
                     e.getMessage();
                 }
-
+                break;
 
                 case 10:
+                    System.out.println("------DELETE THE CUSTOMER DETAILS------");
+                    System.out.println("Enter the customerId : ");
+                    int cId = sc.nextInt();
+                    try{
+                        customerService.deleteCustomerInfo(cId);
+                        System.out.println("Successfully deleted customer Info");
+                    }
+                    catch(CustomerNotFoundException e){
+                        e.getMessage();
+                    }
+                    break;
+
+                case 11:
                     System.out.println("------ADD TO CART------");
                     CartItem cart = new CartItem();
                     System.out.print("Enter the Customer ID : ");
@@ -180,7 +195,7 @@ public class Main {
                     }
                     break;
 
-                case 11 :
+                case 12 :
                     System.out.println("------DISPLAY CART ITEMS------");
                     System.out.println("Enter the customer ID : ");
                     int customerId = sc.nextInt();
@@ -190,7 +205,7 @@ public class Main {
 
                     break;
 
-                case 12 :
+                case 13 :
                     System.out.println("------PLACE ORDER------");
                     System.out.println("Enter the CustomerID : ");
                     double o = 0;
@@ -216,7 +231,7 @@ public class Main {
                         }
                    break;
 
-                    case 13 :
+                    case 14 :
                     System.out.println("------ EXIT ------");
                     System.out.println("Thank you for using Mini E-Commerce");
                     break;

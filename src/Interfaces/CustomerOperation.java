@@ -9,4 +9,5 @@ public interface CustomerOperation {
     public boolean validEmailId(String email);
     public void DisplayCustomer();
     public void updateCustomerInfo(int CustomerId, String customerName, String EmailId)throws CustomerNotFoundException;
+    public void deleteCustomerInfo(int customerId) throws CustomerNotFoundException;
 }

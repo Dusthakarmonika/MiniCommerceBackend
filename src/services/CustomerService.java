@@ -43,6 +43,14 @@ public class CustomerService implements CustomerOperation {
         }
         throw new CustomerNotFoundException("Customer not found");
     }
+    public void deleteCustomerInfo(int customerId)throws CustomerNotFoundException{
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).getCustomerID() == customerId){
+                list.remove(i);
+            }
+        }
+        throw new CustomerNotFoundException("Customer not found");
+    }
 
 
 
