@@ -1,5 +1,6 @@
 package services;
 
+import Interfaces.CartOperation;
 import Interfaces.OrderOperation;
 import model.*;
 import Exception.InsufficientStockException;
@@ -10,12 +11,12 @@ import java.util.ArrayList;
 
 public class OrderService implements OrderOperation {
     ArrayList<Order> list = new ArrayList<>();
-    private CartService cartService;
+    private CartOperation cartService;
     int choice ;
     Payment payment;
 
 
-    public OrderService(CartService cartService){
+    public OrderService(CartOperation cartService){
         this.cartService = cartService;
     }
     @Override

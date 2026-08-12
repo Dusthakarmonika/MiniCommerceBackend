@@ -34,6 +34,15 @@ public class CustomerService implements CustomerOperation {
         String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         return email.matches(regex);
     }
+    public void updateCustomerInfo(int customerId, String name, String emailId) throws CustomerNotFoundException{
+        for(Customer c : list){
+            if(c.getCustomerID() == customerId){
+                c.setCustomerName(name);
+                c.setEmail(emailId);
+            }
+        }
+        throw new CustomerNotFoundException("Customer not found");
+    }
 
 
 

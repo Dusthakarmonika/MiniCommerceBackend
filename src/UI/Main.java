@@ -1,4 +1,7 @@
 package UI;
+import Interfaces.CartOperation;
+import Interfaces.CustomerOperation;
+import Interfaces.OrderOperation;
 import Interfaces.ProductOperation;
 import model.*;
 import services.*;
@@ -14,9 +17,9 @@ public class Main {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         ProductOperation productService = new ProductServices();
-        CustomerService customerService = new CustomerService();
-        CartService cartService = new CartService();
-        OrderService orderService = new OrderService(cartService);
+        CustomerOperation customerService = new CustomerService();
+        CartOperation cartService = new CartService();
+        OrderOperation orderService = new OrderService(cartService);
         System.out.println("------ WELCOME TO MINI E-COMMERCE ------");
         System.out.println(" OPTION 1 : Add a Product" +
                            "\n OPTION 2 : Display the Products" +
@@ -26,10 +29,11 @@ public class Main {
                            "\n OPTION 6 : Add Customer" +
                            "\n OPTION 7 : Display the customer list" +
                            "\n OPTION 8 : Search for the Customer" +
-                           "\n OPTION 9 : Add to Cart" +
-                           "\n OPTION 10 : Display Cart Items" +
-                           "\n OPTION 11 : Place Order" +
-                           "\n OPTION 12 : Exit" );
+                           "\n OPTION 9 : Update the Customer details" +
+                           "\n OPTION 10 : Add to Cart" +
+                           "\n OPTION 11 : Display Cart Items" +
+                           "\n OPTION 12 : Place Order" +
+                           "\n OPTION 13 : Exit" );
         int option = 0;
         while( option < 12) {
             System.out.println("Choose an option : ");
@@ -137,6 +141,23 @@ public class Main {
                     break;
 
                 case 9:
+                    System.out.println("------UPDATE THE CUSTOMER DETAILS------");
+                    System.out.println("Enter the customer Id : ");
+                    int customerId = sc.nextInt();
+                    sc.nextLine();
+                    System.out.println("Enter the updated customer name: ");
+                    String CN = sc.nextLine();
+                    System.out.println("Enter the customer EmailID : ");
+                    String Email = sc.nextLine();
+                try {
+                    customerService.updateCustomerInfo(customerId, CN, Email);
+                }
+                catch(CustomerNotFoundException e){
+                    e.getMessage();
+                }
+
+
+                case 10:
                     System.out.println("------ADD TO CART------");
                     CartItem cart = new CartItem();
                     System.out.print("Enter the Customer ID : ");
@@ -159,7 +180,7 @@ public class Main {
                     }
                     break;
 
-                case 10 :
+                case 11 :
                     System.out.println("------DISPLAY CART ITEMS------");
                     System.out.println("Enter the customer ID : ");
                     int customerId = sc.nextInt();
@@ -169,7 +190,7 @@ public class Main {
 
                     break;
 
-                case 11 :
+                case 12 :
                     System.out.println("------PLACE ORDER------");
                     System.out.println("Enter the CustomerID : ");
                     double o = 0;
@@ -195,11 +216,12 @@ public class Main {
                         }
                    break;
 
-                    case 12 :
+                    case 13 :
                     System.out.println("------ EXIT ------");
                     System.out.println("Thank you for using Mini E-Commerce");
                     break;
             }
+
         }
         }
 
