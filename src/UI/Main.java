@@ -30,12 +30,13 @@ public class Main {
                            "\n OPTION 7 : Display the customer list" +
                            "\n OPTION 8 : Search for the Customer" +
                            "\n OPTION 9 : Update the Customer details" +
-                           "\n OPTION 10 : Add to Cart" +
-                           "\n OPTION 11 : Display Cart Items" +
-                           "\n OPTION 12 : Place Order" +
-                           "\n OPTION 13 : Exit" );
+                           "\n OPTION 10 : DELETE THE CUSTOMER" +
+                           "\n OPTION 11 : Add to Cart" +
+                           "\n OPTION 12 : Display Cart Items" +
+                           "\n OPTION 13 : Place Order" +
+                           "\n OPTION 14 : Exit" );
         int option = 0;
-        while( option < 12) {
+        while( option <= 14) {
             System.out.println("Choose an option : ");
              option = sc.nextInt();
              sc.nextLine();

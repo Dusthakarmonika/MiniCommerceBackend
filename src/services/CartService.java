@@ -12,11 +12,22 @@ public class CartService implements CartOperation {
     ArrayList<CartItem> list = new ArrayList<>();
 @Override
     public void addToCart(product Product, Customer customer, int quantity)throws InsufficientStockException {
-       CartItem cartItem = new CartItem(Product,customer,quantity);
-       if(cartItem.getQuantity() <= cartItem.getProduct().getStock()) {
+       int presentStock = 0;
+           for(CartItem c : list) {
+               if (c.getProduct().equals(Product) && c.getCustomer().equals(customer)) {
+                   presentStock = c.getQuantity() + quantity;
+                   if (presentStock > c.getProduct().getStock()) {
+                       throw new InsufficientStockException("Insufficient Stock");
+                   }
+                   c.setQuantity(presentStock);
+                   return;
+               }
+               if(c.getQuantity() > c.getProduct().getStock()){
+                   throw new InsufficientStockException("Insufficient Stock");
+               }
+           }
+    CartItem cartItem = new CartItem(Product,customer,quantity);
            list.add(cartItem);
-       }
-       throw new InsufficientStockException("Insufficient Stock");
     }
     @Override
     public void displayCart(Customer customer){
