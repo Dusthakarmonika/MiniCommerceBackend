@@ -189,7 +189,7 @@ public class Main {
                         System.out.println("------ADDED TO CART SUCCESSFULLY------");
 
                     }
-                    catch(ProductNotFoundException | CustomerNotFoundException e){
+                    catch(ProductNotFoundException | CustomerNotFoundException | InsufficientStockException e){
                         System.out.println(e.getMessage());
                         return;
                     }

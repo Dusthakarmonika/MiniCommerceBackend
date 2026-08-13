@@ -5,9 +5,9 @@ import model.Customer;
 import model.product;
 
 import java.util.ArrayList;
-
+import Exception.InsufficientStockException;
 public interface CartOperation {
-    public void addToCart(product Product, Customer customer, int quantity);
+    public void addToCart(product Product, Customer customer, int quantity) throws InsufficientStockException;
     public void displayCart(Customer customer);
     public ArrayList<CartItem> getCartItems(Customer customer);
     public void removeCartItems(Customer customer);

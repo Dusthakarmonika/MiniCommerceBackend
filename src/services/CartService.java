@@ -6,13 +6,17 @@ import model.Customer;
 import model.product;
 
 import java.util.ArrayList;
+import Exception.InsufficientStockException;
 
 public class CartService implements CartOperation {
     ArrayList<CartItem> list = new ArrayList<>();
 @Override
-    public void addToCart(product Product, Customer customer, int quantity){
+    public void addToCart(product Product, Customer customer, int quantity)throws InsufficientStockException {
        CartItem cartItem = new CartItem(Product,customer,quantity);
-       list.add(cartItem);
+       if(cartItem.getQuantity() <= cartItem.getProduct().getStock()) {
+           list.add(cartItem);
+       }
+       throw new InsufficientStockException("Insufficient Stock");
     }
     @Override
     public void displayCart(Customer customer){
