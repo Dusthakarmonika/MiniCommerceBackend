@@ -33,11 +33,12 @@ public class Main {
                            "\n OPTION 10 : Delete the Customer" +
                            "\n OPTION 11 : Add to Cart" +
                            "\n OPTION 12 : Display Cart Items" +
-                           "\n OPTION 13 : Delete the Product from the cart" +
-                           "\n OPTION 14 : Place Order" +
-                           "\n OPTION 15 : Exit" );
+                           "\n OPTION 13 : UPDATE THE QUANTITY OF CART ITEM" +
+                           "\n OPTION 14 : Delete the Product from the cart" +
+                           "\n OPTION 15 : Place Order" +
+                           "\n OPTION 16 : Exit" );
         int option = 0;
-        while( option <= 15) {
+        while( option <= 16) {
             System.out.println("Choose an option : ");
              option = sc.nextInt();
              sc.nextLine();
@@ -208,6 +209,27 @@ public class Main {
                     break;
 
                 case 13 :
+                    System.out.println("------UPDATE THE QUANTITY OF THE CARTITEM------");
+                    System.out.println("Enter the customer Id : ");
+                    int cid = sc.nextInt();
+                    System.out.println("Enter the product Id : ");
+                    int pid = sc.nextInt();
+                    System.out.println("Enter the new Quantity of the product : ");
+                    int newQuantity = sc.nextInt();
+                    if(newQuantity <= 0){
+                        System.out.println("invalid Qauntity");
+                        break;
+                    }
+                    try{
+                        cartService.updateCartItemQuantity(cid,pid,newQuantity);
+                        System.out.println("Updated the product quantity successfully");
+                    }
+                    catch(InsufficientStockException e){
+                        e.getMessage();
+                    }
+
+
+                case 14 :
                     System.out.println("------DELETE THE PRODUCT FROM CART------");
                     System.out.println("Enter the Customer ID : ");
                     int Id = sc.nextInt();
@@ -222,7 +244,7 @@ public class Main {
                }
                     break;
 
-                case 14 :
+                case 15 :
                     System.out.println("------PLACE ORDER------");
                     System.out.println("Enter the CustomerID : ");
                     double o = 0;
@@ -248,7 +270,7 @@ public class Main {
                         }
                    break;
 
-                    case 15 :
+                    case 16 :
                     System.out.println("------ EXIT ------");
                     System.out.println("Thank you for using Mini E-Commerce");
                     break;

@@ -79,5 +79,17 @@ public void removeCartItems(Customer customer) {
     }
     throw new ProductNotFoundException("Product not found");
     }
+    public void updateCartItemQuantity(int customerId, int productId, int newQuantity) throws InsufficientStockException {
+        for (CartItem c : list) {
+            if (c.getProduct().getProductID() == productId &&
+                    c.getCustomer().getCustomerID() == customerId &&
+                    c.getProduct().getStock() >= newQuantity) {
+                c.setQuantity(newQuantity);
+                return;
+            }
+            throw new InsufficientStockException("Insufficient Stock in the cart");
+        }
+        throw new InsufficientStockException("Product not found in the cart");
+    }
 
 }

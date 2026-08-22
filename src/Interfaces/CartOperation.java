@@ -14,6 +14,7 @@ public interface CartOperation {
     public ArrayList<CartItem> getCartItems(Customer customer);
     public void removeCartItems(Customer customer);
     public void removeProductFromCart(int ProductId, int customerId)throws ProductNotFoundException;
+    public void updateCartItemQuantity(int customerId, int productId, int newQuantity)throws InsufficientStockException;
 
 
 }
