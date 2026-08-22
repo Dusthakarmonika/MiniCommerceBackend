@@ -7,6 +7,9 @@ import model.product;
 
 import java.util.ArrayList;
 import Exception.InsufficientStockException;
+import Exception.ProductNotFoundException;
+import Exception.CustomerNotFoundException;
+
 
 public class CartService implements CartOperation {
     ArrayList<CartItem> list = new ArrayList<>();
@@ -54,13 +57,27 @@ public ArrayList<CartItem> getCartItems(Customer customer){
         return items;
 }
     @Override
-public void removeCartItems(Customer customer){
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).getCustomer().equals(customer)){
+public void removeCartItems(Customer customer) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getCustomer().equals(customer)) {
                 list.remove(i);
                 i--;
             }
         }
-}
+    }
+    public void removeProductFromCart(int productId,int customerId)throws ProductNotFoundException {
+    if(list.isEmpty()){
+        System.out.println("list is empty");
+        return;
+    }
+    for(int i = 0; i < list.size(); i++){
+        if(list.get(i).getProduct().getProductID() == productId &&
+           list.get(i).getCustomer().getCustomerID() == customerId){
+            list.remove(i);
+            System.out.println("Product removed from cart");
+        }
+    }
+    throw new ProductNotFoundException("Product not found");
+    }
 
 }

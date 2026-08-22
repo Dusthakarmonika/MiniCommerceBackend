@@ -30,13 +30,14 @@ public class Main {
                            "\n OPTION 7 : Display the customer list" +
                            "\n OPTION 8 : Search for the Customer" +
                            "\n OPTION 9 : Update the Customer details" +
-                           "\n OPTION 10 : DELETE THE CUSTOMER" +
+                           "\n OPTION 10 : Delete the Customer" +
                            "\n OPTION 11 : Add to Cart" +
                            "\n OPTION 12 : Display Cart Items" +
-                           "\n OPTION 13 : Place Order" +
-                           "\n OPTION 14 : Exit" );
+                           "\n OPTION 13 : Delete the Product from the cart" +
+                           "\n OPTION 14 : Place Order" +
+                           "\n OPTION 15 : Exit" );
         int option = 0;
-        while( option <= 14) {
+        while( option <= 15) {
             System.out.println("Choose an option : ");
              option = sc.nextInt();
              sc.nextLine();
@@ -207,6 +208,21 @@ public class Main {
                     break;
 
                 case 13 :
+                    System.out.println("------DELETE THE PRODUCT FROM CART------");
+                    System.out.println("Enter the Customer ID : ");
+                    int Id = sc.nextInt();
+                    System.out.println("Enter the Product Id : ");
+                    int pId = sc.nextInt();
+                    try{
+                        cartService.removeProductFromCart(pId,Id);
+                        System.out.println("Removed the product successfully");
+                    }
+               catch(ProductNotFoundException e){
+                        e.getMessage();
+               }
+                    break;
+
+                case 14 :
                     System.out.println("------PLACE ORDER------");
                     System.out.println("Enter the CustomerID : ");
                     double o = 0;
@@ -232,7 +248,7 @@ public class Main {
                         }
                    break;
 
-                    case 14 :
+                    case 15 :
                     System.out.println("------ EXIT ------");
                     System.out.println("Thank you for using Mini E-Commerce");
                     break;
