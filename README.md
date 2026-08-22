@@ -4,11 +4,11 @@ A Java-based backend application that simulates the core fundamentals of an e-co
 
 ## 📊 Project Status
 
-**Current Phase:** Core Development (Phase 1 - Backend Foundation)
+**Current Phase:** Core Development (Phase 1-2 - Backend Foundation & Enhancement)
 
-**Progress:** ~60% Complete
+**Progress:** ~70% Complete
 
-The project now implements product management, a customer model, a cart system, and order placement functionality through an interactive CLI. Recent development has added robust order placement, bill calculation, stock validation, and comprehensive cart management with per-customer isolation.
+The project has evolved significantly with advanced cart management, comprehensive order processing, customer management, and interface-based architecture. Recent updates include cart quantity updates, product removal from cart, duplicate product handling, stock validation during cart operations, customer data management, and interface implementations for better code structure.
 
 ---
 
@@ -26,14 +26,22 @@ The project now implements product management, a customer model, a cart system, 
 - ✓ Email validation for customer creation
 - ✓ Customer-specific cart operations
 - ✓ Persistent customer tracking
+- ✓ Update customer details
+- ✓ Delete customer records
 
 ### Shopping Cart & Orders
 - ✓ Cart model and CartService (add to cart, display cart)
+- ✓ CartItem model for flexible cart management
 - ✓ Customer-specific cart display and removal operations
+- ✓ Update product quantity in cart
+- ✓ Handle duplicate products in cart (merge quantities)
+- ✓ Stock validation when adding products to cart
+- ✓ Remove products from cart with stock restoration
 - ✓ Order model and OrderService for processing purchases
 - ✓ Place order from customer's cart with validation
-- ✓ Automatic bill calculation and order ID generation
+- ✓ Automatic bill calculation and order ID generation (starting from 1000)
 - ✓ Real-time stock reduction when orders are placed
+- ✓ Order history and order search functionality
 
 ### Error Handling & Validation
 - ✓ Custom exceptions:
@@ -44,45 +52,51 @@ The project now implements product management, a customer model, a cart system, 
 - ✓ Try/catch handling in the CLI for seamless error management
 - ✓ Input validation for user entries
 
-### Architecture & UI
+### Architecture & Code Design
 - ✓ CLI-based interactive user interface with menu-driven operations
 - ✓ MVC-style separation of concerns (Models, Services, UI)
 - ✓ Service layer pattern for business logic encapsulation
+- ✓ Interface-based design for extensibility
+- ✓ Abstract classes for payment framework (foundational structure)
 
 ---
 
-## 🎯 Recent Development Milestones
+## 🎯 Recent Development Milestones (as of August 22, 2026)
 
 ### Latest Updates
-- ✅ Added CartItem model and CartService for flexible cart management
-- ✅ Implemented customer-specific cart operations (add, view, remove by customer)
-- ✅ Created Order model and OrderService with comprehensive `placeOrder()` method that:
-  - Validates stock availability before order placement
-  - Computes accurate total bill amounts
-  - Automatically reduces product stock
-  - Returns comprehensive order total
-- ✅ Order ID generation with auto-incrementing system starting from 1000
-- ✅ Email validation for customers with improved input handling
-- ✅ Custom exception classes for clearer, more meaningful error messages
-- ✅ Enhanced CLI menu with intuitive navigation and options
-- ✅ MVC architecture for better code organization and maintainability
+- ✅ **Cart Quantity Management**: Implemented ability to update product quantities in customer-specific carts
+- ✅ **Cart Item Removal**: Added functionality to remove products from customer carts
+- ✅ **Duplicate Product Handling**: Smart cart management that merges duplicate products and updates quantities
+- ✅ **Stock Validation**: Compare stock availability while adding products to cart to prevent over-ordering
+- ✅ **Customer Data Operations**: 
+  - Delete customer details
+  - Update customer information
+- ✅ **Interface Implementation**: Implemented interfaces for better code abstraction and extensibility
+- ✅ **Abstract Payment Class**: Created foundational abstract class for payment processing
+- ✅ **Enhanced CLI Menu**: Intuitive menu with options for all cart and order operations
+- ✅ **Bill Calculation & Order ID**: Auto-incrementing order IDs and accurate bill calculations
+- ✅ **Email Validation**: Robust customer email validation
+- ✅ **Custom Exception Handling**: Comprehensive error management with meaningful messages
 
 ---
 
 ## 🎯 Planned Features (Next Phases)
 
 ### Phase 2: Customer & Order Management (In Progress)
-- [ ] Persist orders in a data structure (order history)
+- [ ] Persist orders in a data structure (order history) - *In Progress*
 - [ ] Link customers to orders with stronger data relationships
 - [ ] Order status tracking (Pending, Confirmed, Shipped, Delivered)
 - [ ] Order cancellation functionality
+- [ ] Order tracking and status updates
 
 ### Phase 3: Advanced Features
 - [ ] Invoice generation with detailed billing information
-- [ ] Payment processing integration
+- [ ] Payment processing integration (implement Payment interface)
+- [ ] Multiple payment methods support (Credit Card, Debit Card, UPI, etc.)
 - [ ] Role-based authentication and user management (Admin, Customer, Guest)
 - [ ] Discount and coupon system
 - [ ] Product category management
+- [ ] Wishlist functionality
 
 ### Phase 4: Persistence & API
 - [ ] Database persistence (MySQL/PostgreSQL)
@@ -105,7 +119,7 @@ The project now implements product management, a customer model, a cart system, 
 | Component | Technology |
 |-----------|-----------|
 | **Language** | Java 8+ |
-| **Architecture** | MVC Pattern |
+| **Architecture** | MVC Pattern + Interface-based Design |
 | **UI** | CLI-based (Command Line Interface) |
 | **Data Store** | In-memory ArrayLists (temporary) |
 | **Planned** | Spring Boot, Hibernate, MySQL/PostgreSQL |
@@ -159,8 +173,14 @@ The application provides an interactive menu with the following operations:
 8. Search Customer            - Search customers by details
 9. Add to Cart                - Add items to customer's cart
 10. Display Cart Items        - View items in customer's cart
-11. Place Order               - Create an order from cart
-12. Exit                      - Close the application
+11. Update Cart Quantity      - Change product quantity in cart
+12. Remove from Cart          - Remove products from customer's cart
+13. Place Order               - Create an order from cart
+14. Display Orders            - View order history
+15. Search Order              - Find specific orders
+16. Update Customer           - Modify customer details
+17. Delete Customer           - Remove customer from system
+18. Exit                      - Close the application
 ```
 
 ---
@@ -170,14 +190,15 @@ The application provides an interactive menu with the following operations:
 ```
 MiniCommerceBackend/
 ├── src/
-│   ├── models/              # Data models (Product, Customer, Cart, Order)
-│   ├── services/            # Business logic (ProductService, CartService, OrderService)
+│   ├── models/              # Data models (Product, Customer, Cart, CartItem, Order)
+│   ├── services/            # Business logic (ProductService, CartService, OrderService, CustomerService)
 │   ├── exceptions/          # Custom exception classes
+│   ├── interfaces/          # Interface definitions
 │   ├── ui/                  # User interface (CLI)
-��   └── Main.java           # Application entry point
+│   └── Main.java            # Application entry point
 ├── bin/                     # Compiled classes (generated)
-├── README.md               # This file
-└── .gitignore              # Git ignore file
+├── README.md                # This file
+└── .gitignore               # Git ignore file
 ```
 
 ---
@@ -193,6 +214,7 @@ Contributions are welcome! Here's how you can help:
 - 🌐 Add REST API frontend with Spring Boot
 - 📊 Enhance logging and monitoring capabilities
 - 🎨 Improve UI with better user experience
+- 💳 Implement payment processing interfaces
 
 ### Contributing Workflow
 1. **Fork** the repository
@@ -206,6 +228,7 @@ Contributions are welcome! Here's how you can help:
 - Add comments for complex logic
 - Include unit tests for new features
 - Update documentation as needed
+- Use meaningful commit messages
 
 ---
 
