@@ -1,0 +1,9 @@
+POST https://silver-trout-x595967p7rxfp6p5-8080.app.github.dev/products
+Content-Type: application/json
+
+{
+    "productID": 102,
+    "productName": "Phone",
+    "price": 25000,
+    "stock": 20
+}
