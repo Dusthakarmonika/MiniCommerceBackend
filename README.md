@@ -1,242 +1,212 @@
 # 🛒 Mini E-Commerce Backend
 
-A Java-based backend application that simulates the core fundamentals of an e-commerce system. It allows users to manage products by performing CRUD (Create, Read, Update, Delete) operations using object-oriented programming principles.
+A Java-based mini e-commerce backend that demonstrates product, customer, cart, order, and payment workflows. The project began as an interactive command-line application and has recently been migrated toward a Spring Boot REST API.
 
 ## 📊 Project Status
 
-**Current Phase:** Core Development (Phase 1-2 - Backend Foundation & Enhancement)
+**Current phase:** Spring Boot API migration and backend enhancement
 
-**Progress:** ~70% Complete
+The core business services remain available through the CLI, while the project now includes a Spring Boot application entry point, REST controllers, Maven build configuration, and initial MySQL/JPA integration.
 
-The project has evolved significantly with advanced cart management, comprehensive order processing, customer management, and interface-based architecture. Recent updates include cart quantity updates, product removal from cart, duplicate product handling, stock validation during cart operations, customer data management, and interface implementations for better code structure.
+> **Data note:** Product and customer data is currently held in memory by the service layer. The MySQL configuration is in place, but database entities, repositories, and full persistence are still planned.
 
----
+## ✅ Features
 
-## ✅ Features Implemented
+### Product management
 
-### Product Management
-- ✓ Full Product CRUD operations (Create, Read, Update, Delete)
-- ✓ Comprehensive inventory management with stock tracking
-- ✓ Search products by name
-- ✓ Update product stock by product ID
-- ✓ Product data model with getters/setters
+- Create, list, search, update stock, and remove products
+- Track product prices and stock levels
+- Validate missing products and insufficient stock
 
-### Customer Management
-- ✓ Customer model and CRUD utilities
-- ✓ Email validation for customer creation
-- ✓ Customer-specific cart operations
-- ✓ Persistent customer tracking
-- ✓ Update customer details
-- ✓ Delete customer records
+### Customers, carts, and orders
 
-### Shopping Cart & Orders
-- ✓ Cart model and CartService (add to cart, display cart)
-- ✓ CartItem model for flexible cart management
-- ✓ Customer-specific cart display and removal operations
-- ✓ Update product quantity in cart
-- ✓ Handle duplicate products in cart (merge quantities)
-- ✓ Stock validation when adding products to cart
-- ✓ Remove products from cart with stock restoration
-- ✓ Order model and OrderService for processing purchases
-- ✓ Place order from customer's cart with validation
-- ✓ Automatic bill calculation and order ID generation (starting from 1000)
-- ✓ Real-time stock reduction when orders are placed
-- ✓ Order history and order search functionality
+- Create, search, update, and delete customers
+- Validate customer email addresses
+- Maintain customer-specific carts
+- Add products to carts with quantity and stock validation
+- Merge duplicate cart items
+- Update cart quantities and remove cart items
+- Restore stock when items are removed from a cart
+- Place orders with bill calculation and automatic order IDs
+- Support UPI, card, and cash-on-delivery payment models
+- Handle empty carts and other domain errors with custom exceptions
 
-### Error Handling & Validation
-- ✓ Custom exceptions:
-  - `ProductNotFoundException` - when product is not found
-  - `CustomerNotFoundException` - when customer is not found
-  - `InsufficientStockException` - when product stock is insufficient
-  - `EmptyCartException` - when attempting operations on empty cart
-- ✓ Try/catch handling in the CLI for seamless error management
-- ✓ Input validation for user entries
+### REST API
 
-### Architecture & Code Design
-- ✓ CLI-based interactive user interface with menu-driven operations
-- ✓ MVC-style separation of concerns (Models, Services, UI)
-- ✓ Service layer pattern for business logic encapsulation
-- ✓ Interface-based design for extensibility
-- ✓ Abstract classes for payment framework (foundational structure)
+The Spring Boot API currently exposes product endpoints:
 
----
+| Method | Endpoint | Purpose |
+|--------|----------|---------|
+| `GET` | `/` | Check that the application is running |
+| `GET` | `/products` | Return all products |
+| `POST` | `/products` | Add a product |
+| `GET` | `/products/{name}` | Search for a product by name |
+| `PUT` | `/products/{id}` | Update a product's stock |
+| `DELETE` | `/products/{id}` | Remove a product |
 
-## 🎯 Recent Development Milestones (as of August 22, 2026)
+Successful product creation returns HTTP `201 Created`; update and delete operations return `404 Not Found` when the product does not exist.
 
-### Latest Updates
-- ✅ **Cart Quantity Management**: Implemented ability to update product quantities in customer-specific carts
-- ✅ **Cart Item Removal**: Added functionality to remove products from customer carts
-- ✅ **Duplicate Product Handling**: Smart cart management that merges duplicate products and updates quantities
-- ✅ **Stock Validation**: Compare stock availability while adding products to cart to prevent over-ordering
-- ✅ **Customer Data Operations**: 
-  - Delete customer details
-  - Update customer information
-- ✅ **Interface Implementation**: Implemented interfaces for better code abstraction and extensibility
-- ✅ **Abstract Payment Class**: Created foundational abstract class for payment processing
-- ✅ **Enhanced CLI Menu**: Intuitive menu with options for all cart and order operations
-- ✅ **Bill Calculation & Order ID**: Auto-incrementing order IDs and accurate bill calculations
-- ✅ **Email Validation**: Robust customer email validation
-- ✅ **Custom Exception Handling**: Comprehensive error management with meaningful messages
+### Design and architecture
 
----
+- Spring Boot application entry point
+- MVC-style separation between controllers, services, models, and UI
+- Interface-based service contracts
+- Service layer for business logic
+- Custom exceptions for domain validation
+- In-memory `ArrayList` storage during the current development phase
 
-## 🎯 Planned Features (Next Phases)
-
-### Phase 2: Customer & Order Management (In Progress)
-- [ ] Persist orders in a data structure (order history) - *In Progress*
-- [ ] Link customers to orders with stronger data relationships
-- [ ] Order status tracking (Pending, Confirmed, Shipped, Delivered)
-- [ ] Order cancellation functionality
-- [ ] Order tracking and status updates
-
-### Phase 3: Advanced Features
-- [ ] Invoice generation with detailed billing information
-- [ ] Payment processing integration (implement Payment interface)
-- [ ] Multiple payment methods support (Credit Card, Debit Card, UPI, etc.)
-- [ ] Role-based authentication and user management (Admin, Customer, Guest)
-- [ ] Discount and coupon system
-- [ ] Product category management
-- [ ] Wishlist functionality
-
-### Phase 4: Persistence & API
-- [ ] Database persistence (MySQL/PostgreSQL)
-- [ ] Hibernate ORM integration for object-relational mapping
-- [ ] REST API development with Spring Boot
-- [ ] API documentation (Swagger/OpenAPI)
-- [ ] Request validation and response formatting
-
-### Phase 5: Quality & Testing
-- [ ] Comprehensive Unit tests (JUnit 5)
-- [ ] Integration tests for service layers
-- [ ] Enhanced input validation and robust error handling
-- [ ] Logging framework integration (Log4j/SLF4J)
-- [ ] Performance monitoring and metrics
-
----
-
-## 🛠️ Tech Stack
+## 🛠️ Tech stack
 
 | Component | Technology |
-|-----------|-----------|
-| **Language** | Java 8+ |
-| **Architecture** | MVC Pattern + Interface-based Design |
-| **UI** | CLI-based (Command Line Interface) |
-| **Data Store** | In-memory ArrayLists (temporary) |
-| **Planned** | Spring Boot, Hibernate, MySQL/PostgreSQL |
+|-----------|------------|
+| **Language** | Java 25 |
+| **Framework** | Spring Boot 3.5.6 |
+| **Build tool** | Maven |
+| **Web layer** | Spring Boot Web / REST controllers |
+| **Persistence dependencies** | Spring Data JPA and MySQL Connector/J |
+| **Current data store** | In-memory collections |
+| **User interface** | Interactive CLI |
 
----
-
-## 🚀 Getting Started
+## 🚀 Getting started
 
 ### Prerequisites
-- **Java:** Version 8 or higher installed and configured in PATH
-- **Maven** (optional): For advanced project management and dependencies
-- **Gradle** (optional): Alternative build tool
 
-### Installation & Setup
+- Java 25 or a compatible JDK
+- Maven 3.9+
+- MySQL, if you are working on the database integration
 
-1. **Clone the repository:**
+### Run with Maven
+
+1. Clone the repository:
+
    ```bash
    git clone https://github.com/Dusthakarmonika/MiniCommerceBackend.git
    cd MiniCommerceBackend
    ```
 
-2. **Compile the application:**
+2. Configure database credentials as environment variables when database integration is enabled:
+
    ```bash
-   javac -d bin src/**/*.java
+   export DB_USERNAME=your_mysql_username
+   export DB_PASSWORD=your_mysql_password
    ```
 
-3. **Run the application:**
+3. Build the project:
+
    ```bash
-   java -cp bin Main
+   mvn clean package
    ```
 
-### Important Notes
-- 🔴 The application currently uses in-memory storage; all data is lost when the application exits
-- 💾 Future phases will include database persistence
-- 🧪 Use the CLI menu to interact with all features
+4. Start the Spring Boot application:
 
----
+   ```bash
+   mvn spring-boot:run
+   ```
 
-## 📋 CLI Menu Options
+The application starts on `http://localhost:8080` by default.
 
-The application provides an interactive menu with the following operations:
+### Try the API
 
-```
-1. Add a Product              - Create a new product with details
-2. Display Products           - View all products in the system
-3. Search Product             - Search products by name
-4. Update Product Stock       - Modify stock quantity for a product
-5. Remove Product             - Delete a product from the system
-6. Add Customer               - Register a new customer
-7. Display Customers          - View all registered customers
-8. Search Customer            - Search customers by details
-9. Add to Cart                - Add items to customer's cart
-10. Display Cart Items        - View items in customer's cart
-11. Update Cart Quantity      - Change product quantity in cart
-12. Remove from Cart          - Remove products from customer's cart
-13. Place Order               - Create an order from cart
-14. Display Orders            - View order history
-15. Search Order              - Find specific orders
-16. Update Customer           - Modify customer details
-17. Delete Customer           - Remove customer from system
-18. Exit                      - Close the application
+Check the application:
+
+```bash
+curl http://localhost:8080/
 ```
 
----
+Add a product:
 
-## 📁 Project Structure
-
+```bash
+curl -X POST http://localhost:8080/products \
+  -H "Content-Type: application/json" \
+  -d '{
+    "productID": 1,
+    "productName": "Laptop",
+    "price": 50000,
+    "stock": 10
+  }'
 ```
+
+List products:
+
+```bash
+curl http://localhost:8080/products
+```
+
+The repository also includes `test.http` with an example product request for IDE HTTP clients.
+
+## 🖥️ CLI application
+
+The original interactive CLI remains available through `UI.Main`. It supports:
+
+1. Add, display, search, update, and remove products
+2. Add, display, search, update, and delete customers
+3. Add products to a customer's cart
+4. Display, update, and remove cart items
+5. Place orders and select a payment type
+6. Exit the application
+
+The CLI and REST API use the same service-layer concepts, but the current storage is in memory and is not shared across separate application processes.
+
+## 📁 Project structure
+
+```text
 MiniCommerceBackend/
+├── pom.xml
 ├── src/
-│   ├── models/              # Data models (Product, Customer, Cart, CartItem, Order)
-│   ├── services/            # Business logic (ProductService, CartService, OrderService, CustomerService)
-│   ├── exceptions/          # Custom exception classes
-│   ├── interfaces/          # Interface definitions
-│   ├── ui/                  # User interface (CLI)
-│   └── Main.java            # Application entry point
-├── bin/                     # Compiled classes (generated)
-├── README.md                # This file
-└── .gitignore               # Git ignore file
+│   ├── com/dusthakarmonika/minicommerce/
+│   │   ├── controller/       # Spring REST controllers
+│   │   ├── model/            # Product, customer, cart, order, and payment models
+│   │   ├── services/         # Product, customer, cart, and order services
+│   │   ├── Interfaces/       # Service contracts
+│   │   ├── Exception/        # Custom domain exceptions
+│   │   ├── UI/               # Interactive CLI
+│   │   └── MiniCommerceApplication.java
+│   └── main/resources/
+│       └── application.properties
+├── test.http                 # Example REST request
+├── README.md
+└── .gitignore
 ```
 
----
+## 🔐 Configuration
+
+Database properties are read from environment variables rather than being committed as plain-text credentials:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/minicommerce
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+```
+
+Before using database-backed features, create the `minicommerce` database and provide valid credentials. Full JPA entity and repository support is part of the next persistence phase.
+
+## 🎯 Roadmap
+
+- [ ] Add JPA entities and repositories
+- [ ] Persist products, customers, carts, and orders in MySQL
+- [ ] Add REST endpoints for customers, carts, and orders
+- [ ] Add request validation and consistent API error responses
+- [ ] Add order status and cancellation workflows
+- [ ] Add authentication and role-based authorization
+- [ ] Add invoice, discount, category, and wishlist features
+- [ ] Add JUnit and integration test coverage
+- [ ] Add API documentation with Swagger/OpenAPI
+- [ ] Add structured logging and monitoring
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
+1. Fork the repository.
+2. Create a feature branch:
 
-### Suggested Contributions
-- 🧪 Add comprehensive unit tests (JUnit 5)
-- 💾 Implement database persistence layer and migrations
-- 🛡️ Improve error handling and input validation
-- 🌐 Add REST API frontend with Spring Boot
-- 📊 Enhance logging and monitoring capabilities
-- 🎨 Improve UI with better user experience
-- 💳 Implement payment processing interfaces
+   ```bash
+   git checkout -b feature/your-feature
+   ```
 
-### Contributing Workflow
-1. **Fork** the repository
-2. **Create a feature branch:** `git checkout -b feature/your-feature`
-3. **Commit your changes:** `git commit -m "Add your feature description"`
-4. **Push to your branch:** `git push origin feature/your-feature`
-5. **Open a Pull Request** with detailed description of changes
+3. Build and test your changes with Maven.
+4. Commit using a meaningful message.
+5. Push the branch and open a pull request.
 
-### Code Standards
-- Follow Java naming conventions and coding standards
-- Add comments for complex logic
-- Include unit tests for new features
-- Update documentation as needed
-- Use meaningful commit messages
-
----
-
-## 📝 License
-
-This project is open source. Refer to the LICENSE file for more details.
-
----
+Please follow Java naming conventions, keep business logic in the service layer, and update the documentation when behavior changes.
 
 ## 👤 Author
 
@@ -245,16 +215,6 @@ This project is open source. Refer to the LICENSE file for more details.
 - GitHub: [@Dusthakarmonika](https://github.com/Dusthakarmonika)
 - Project: [MiniCommerceBackend](https://github.com/Dusthakarmonika/MiniCommerceBackend)
 
-Feel free to:
-- 🐛 Report issues and bugs
-- 💡 Suggest new features
-- 🙋 Ask questions or seek clarification
-- ✨ Contribute improvements
+## 📞 Support
 
----
-
-## 📞 Support & Questions
-
-For questions, issues, or suggestions, please [open an issue](https://github.com/Dusthakarmonika/MiniCommerceBackend/issues) on the repository.
-
-**Happy Coding!** 🚀
+For questions, bugs, or feature suggestions, [open an issue](https://github.com/Dusthakarmonika/MiniCommerceBackend/issues).
