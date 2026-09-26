@@ -1,3 +1,5 @@
+package com.dusthakarmonika.minicommerce.controller;
+
 import com.dusthakarmonika.minicommerce.model.Customer;
 import com.dusthakarmonika.minicommerce.services.CustomerService;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,4 +43,12 @@ public class CustomerController {
         customerService.deleteCustomerInfo(customerId);
         return ResponseEntity.ok("Customer information deleted successfully");
     }
+    @GetMapping("/customers/{id}")
+public ResponseEntity<Customer> getCustomerById(
+        @PathVariable("id") int customerId) throws CustomerNotFoundException {
+
+    Customer customer = customerService.searchCustomer(customerId);
+
+    return ResponseEntity.ok(customer);
+}
 }

@@ -1,13 +1,17 @@
 package com.dusthakarmonika.minicommerce.model;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Id;
 
 public class CartItem {
     private product Product;
-    private Customer customer;
+    @ManyToOne
+    private Cart cart;
     private int quantity;
 
-    public CartItem(product Product, Customer customer, int quantity){
+    public CartItem(product Product, Cart cart, int quantity){
         this.Product = Product;
-        this.customer = customer;
+        this.cart = cart;
         this.quantity = quantity;
     }
     public CartItem(){
@@ -16,8 +20,8 @@ public class CartItem {
     public product getProduct(){
         return Product;
     }
-    public Customer getCustomer(){
-        return customer;
+    public Cart getCart(){
+        return cart;
     }
     public int getQuantity(){
         return quantity;
@@ -25,15 +29,15 @@ public class CartItem {
     public void setProduct(product Product){
         this.Product = Product;
     }
-    public void setCustomer(Customer customer){
-        this.customer = customer;
+    public void setCart(Cart cart){
+        this.cart = cart;
     }
     public void setQuantity(int quantity){
         this.quantity = quantity;
     }
     public String toString(){
         return "  Product : " + Product.getProductName() +
-                "\n Customer : " + customer.getCustomerName() +
+                "\n Cart : " + cart.getCartId() +
                 "\n Quantity : " + quantity;
     }
 }

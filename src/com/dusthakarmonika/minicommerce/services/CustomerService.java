@@ -6,7 +6,9 @@ import com.dusthakarmonika.minicommerce.model.Customer;
 import java.util.List;
 import com.dusthakarmonika.minicommerce.Exception.CustomerNotFoundException;
 import com.dusthakarmonika.minicommerce.repository.CustomerRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CustomerService implements CustomerOperation {
     private CustomerRepository customerRepository;
     public CustomerService(CustomerRepository customerRepository) {
@@ -37,6 +39,7 @@ public class CustomerService implements CustomerOperation {
     public String deleteCustomerInfo(int customerId)throws CustomerNotFoundException{
         customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
         customerRepository.deleteById(customerId);
+        return "Customer information deleted successfully";
     }
 
 
