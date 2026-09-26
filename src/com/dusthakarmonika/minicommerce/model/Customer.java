@@ -1,11 +1,17 @@
 
 package com.dusthakarmonika.minicommerce.model;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Entity
 public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerID;
     private String customerName;
     private String email;

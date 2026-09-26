@@ -13,45 +13,52 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import java.util.List;
 
 @RestController
-public class ProductController{
+public class ProductController {
+
     private final ProductServices productServices;
 
-    public ProductController(ProductServices productServices){
+    public ProductController(ProductServices productServices) {
         this.productServices = productServices;
     }
-    @GetMapping("/products")
-    public ArrayList<product> getProduct(){
-        return productServices.getProduct();
-    }
-    @PostMapping("/products")
-    public ResponseEntity<String> addProduct(@RequestBody product Product){
-        productServices.addProduct(Product);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully");
-    }
-   @GetMapping("/products/{name}")
-public product searchProduct(@PathVariable String name) throws ProductNotFoundException {
-    return productServices.searchProduct(name);
-}
-@PutMapping("/products/{id}")
 
-public ResponseEntity<String> updateStock(@PathVariable("id") int productId, @RequestBody product Product){
-     if(productServices.updateProduct(productId, Product.getStock())){;
-     return ResponseEntity.ok("Stock updated Successfully");
-     }
-     else{
-        return ResponseEntity.notFound().build();
-     }
-}
-@DeleteMapping("/products/{id}")
-public ResponseEntity<String> removeProduct(@PathVariable int id){
-    if(productServices.removeProduct(id)){
+    @GetMapping("/products")
+    public List<product> getProduct() {
+        return productServices.displayProducts();
+    }
+
+    @PostMapping("/products")
+    public ResponseEntity<String> addProduct(@RequestBody product Product) {
+        productServices.addProduct(Product);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Product added successfully");
+    }
+
+    @GetMapping("/products/{name}")
+    public product searchProduct(@PathVariable String name)
+            throws ProductNotFoundException {
+        return productServices.searchProduct(name);
+    }
+
+    @PutMapping("/products/{id}")
+    public ResponseEntity<String> updateStock(
+            @PathVariable("id") int productId,
+            @RequestBody product Product)
+            throws ProductNotFoundException {
+
+        productServices.updateProduct(productId, Product.getStock());
+
+        return ResponseEntity.ok("Stock updated Successfully");
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<String> removeProduct(@PathVariable int id)
+            throws ProductNotFoundException {
+
+        productServices.removeProduct(id);
+
         return ResponseEntity.ok("Product removed successfully");
     }
-    else{
-        return ResponseEntity.notFound().build();
-    }
-}
-
 }

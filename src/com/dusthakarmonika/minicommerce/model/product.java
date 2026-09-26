@@ -1,6 +1,19 @@
 package com.dusthakarmonika.minicommerce.model;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 
+
+
+@Entity
+@Table(name = "products")
 public class product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private int productID;
     private String productName;
     private int Price;
@@ -41,10 +54,10 @@ public class product {
     }
     @Override
     public String toString(){
-        return "Product { " +
-                "Product ID : " + productID +
-                ", Product Name : " + productName +
-                ", Product Price : " + Price +
-                ", Product Stock : " + Stock;
+        return "Product {" +
+                "Product ID : " + productID + "\n" +
+                "Product Name : " + productName + "\n" +
+                "Product Price : " + Price + "\n" +
+                "Product Stock : " + Stock;
     }
 }

@@ -6,60 +6,47 @@ import com.dusthakarmonika.minicommerce.model.Customer;
 import com.dusthakarmonika.minicommerce.model.product;
 import com.dusthakarmonika.minicommerce.Exception.ProductNotFoundException;
 import org.springframework.stereotype.Service;
+import com.dusthakarmonika.minicommerce.repository.ProductRepository;
+import java.util.List;
 
 
-import java.util.ArrayList;
 @Service
 public class ProductServices implements ProductOperation {
-    ArrayList<product> list = new ArrayList<>();
+    private final ProductRepository productRepository;
 
-    public ArrayList<product> getProduct(){
-        return list;
+    public ProductServices(ProductRepository productRepository){
+        this.productRepository = productRepository;
     }
+
 @Override
     public void addProduct(product Product ){
-        list.add(Product);
+        productRepository.save(Product);
     }
     @Override
-    public void displayProducts(){
-        if(list.isEmpty()) {
-            System.out.println("No product is added");
-            return;
-        }
-        for(product p : list){
-            System.out.println(p);
-        }
+    public List<product> displayProducts(){
+        return productRepository.findAll();
     }
     @Override
    public product searchProduct(String name) throws ProductNotFoundException {
-       for(int i = 0; i < list.size(); i++){
-           if(name.equalsIgnoreCase(list.get(i).getProductName())) {
-               return list.get(i);
-           }
+       product Product = productRepository.findByProductNameIgnoreCase(name);
+       if(Product != null){
+        return Product;
        }
        throw new ProductNotFoundException("Product not found");
     }
     @Override
-    public boolean updateProduct( int productId,int stock){
-        boolean isFound = false;
-        for(product p : list){
-            if(p.getProductID() == productId) {
-                p.setStock(stock);
-                isFound = true;
-            }
-        }
-        return isFound;
+    public void updateProduct( int productId,int stock)throws ProductNotFoundException{
+        product Product = productRepository.findById(productId).orElseThrow(()->new ProductNotFoundException("No Product Found"));
+        Product.setStock(stock);
+        productRepository.save(Product);
     }
     @Override
-    public boolean removeProduct(int productID){
-        boolean isFound = false;
-        for(int i = list.size()-1; i >= 0; i--){
-            if(productID == list.get(i).getProductID()){
-                list.remove(list.get(i));
-                isFound = true;
-            }
-        }
-        return isFound;
+    public boolean removeProduct(int productID) throws ProductNotFoundException{
+       if(!productRepository.existsById(productID)){
+        throw new ProductNotFoundException("Product Not Found");
+       }
+       productRepository.deleteById(productID);
+       return true;
     }
 
 

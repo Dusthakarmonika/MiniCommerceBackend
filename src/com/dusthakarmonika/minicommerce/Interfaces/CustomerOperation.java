@@ -2,12 +2,13 @@ package com.dusthakarmonika.minicommerce.Interfaces;
 
 import com.dusthakarmonika.minicommerce.model.Customer;
 import com.dusthakarmonika.minicommerce.Exception.CustomerNotFoundException;
+import java.util.List;
 
 public interface CustomerOperation {
     public void addCustomer(Customer customer);
     public Customer searchCustomer(int customerID) throws CustomerNotFoundException;
     public boolean validEmailId(String email);
-    public void DisplayCustomer();
-    public void updateCustomerInfo(int CustomerId, String customerName, String EmailId)throws CustomerNotFoundException;
-    public void deleteCustomerInfo(int customerId) throws CustomerNotFoundException;
+    public List<Customer> DisplayCustomer();
+    public String updateCustomerInfo(int customerId, String customerName, String EmailId)throws CustomerNotFoundException;
+    public String deleteCustomerInfo(int customerId) throws CustomerNotFoundException;
 }
