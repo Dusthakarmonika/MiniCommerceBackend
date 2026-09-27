@@ -1,5 +1,4 @@
 package com.dusthakarmonika.minicommerce.model;
-import java.lang.annotation.Inherited;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +6,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import com.dusthakarmonika.minicommerce.model.Customer;
+import jakarta.persistence.OneToMany;
+import java.util.List;
+import java.util.ArrayList;
+import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+
 
 @Entity
 public class Cart {
@@ -16,6 +22,9 @@ public class Cart {
     private int cartId;
     @OneToOne
     private Customer customer;
+    @OneToMany(mappedBy = "cart")
+    @JsonManagedReference
+    private List<CartItem> cartItems = new ArrayList<>();
 
     public Cart(){
 
@@ -32,5 +41,10 @@ public class Cart {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
 }

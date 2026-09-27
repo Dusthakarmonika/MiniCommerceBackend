@@ -2,11 +2,24 @@ package com.dusthakarmonika.minicommerce.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+
+@Entity
 public class CartItem {
-    private product Product;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @ManyToOne
+    private product Product;
+
+    @ManyToOne
+    @JsonBackReference
     private Cart cart;
+
     private int quantity;
 
     public CartItem(product Product, Cart cart, int quantity){
