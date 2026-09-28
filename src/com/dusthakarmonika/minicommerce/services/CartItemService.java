@@ -15,12 +15,12 @@ import com.dusthakarmonika.minicommerce.repository.ProductRepository;
 
 import com.dusthakarmonika.minicommerce.Exception.CartNotFoundException;
 import com.dusthakarmonika.minicommerce.Exception.ProductNotFoundException;
-
+import com.dusthakarmonika.minicommerce.Exception.InsufficientStockException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CartItemService  {
-    ArrayList<CartItem> list = new ArrayList<>();
+    
     private final CartItemRepository cartItemRepository;
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
@@ -39,50 +39,22 @@ public class CartItemService  {
        return cartItemRepository.save(cartItem);
     }
 
-public ArrayList<CartItem> getCartItems(Cart cart){
-    ArrayList<CartItem> items = new ArrayList<>();
+    public CartItem updateQuantity(Long cartItemId, int quantity) throws CartNotFoundException, InsufficientStockException {
+        CartItem cartItem = cartItemRepository.findById(cartItemId).
+                            orElseThrow(() -> new CartNotFoundException("Cart Item not found"));
+        cartItem.setQuantity(quantity);
+        int stock = cartItem.getProduct().getStock();
+        if(quantity > stock){
+            throw new InsufficientStockException("Insufficient stock for product: ");
+        }
+        return cartItemRepository.save(cartItem);
+    }
 
-        for(CartItem c : list){
-            if(c.getCart().equals(cart)){
-                items.add(c);
-            }
-        }
-        return items;
-}
-
-public void removeCartItems(Cart cart){ 
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getCart().equals(cart)) {
-                list.remove(i);
-                i--;
-            }
-        }
-    }
-    public void removeProductFromCart(int productId,int CartId)throws ProductNotFoundException {
-    if(list.isEmpty()){
-        System.out.println("list is empty");
-        return;
-    }
-    for(int i = 0; i < list.size(); i++){
-        if(list.get(i).getProduct().getProductID() == productId &&
-           list.get(i).getCart().getCartId() == CartId){
-            list.remove(i);
-            System.out.println("Product removed from cart");
-        }
-    }
-    throw new ProductNotFoundException("Product not found");
-    }
-    public void updateCartItemQuantity(int CartId, int productId, int newQuantity) throws InsufficientStockException {
-        for (CartItem c : list) {
-            if (c.getProduct().getProductID() == productId &&
-                    c.getCart().getCartId() == CartId &&
-                    c.getProduct().getStock() >= newQuantity) {
-                c.setQuantity(newQuantity);
-                return;
-            }
-            throw new InsufficientStockException("Insufficient Stock in the cart");
-        }
-        throw new InsufficientStockException("Product not found in the cart");
+    public void DeleteCart(Long cartItemId) throws CartNotFoundException {
+        CartItem cartItem = cartItemRepository.findById(cartItemId).
+                            orElseThrow(() -> new CartNotFoundException("Cart Item not found"));
+        cartItemRepository.delete(cartItem);
     }
 
 }
+
