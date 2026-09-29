@@ -1,53 +1,38 @@
 package com.dusthakarmonika.minicommerce.services;
 
-import com.dusthakarmonika.minicommerce.Interfaces.CartOperation;
-import com.dusthakarmonika.minicommerce.Interfaces.OrderOperation;
-import com.dusthakarmonika.minicommerce.model.*;
-import com.dusthakarmonika.minicommerce.Exception.InsufficientStockException;
-import com.dusthakarmonika.minicommerce.Exception.EmptyCartException;
+import org.springframework.stereotype.Service;
+import com.dusthakarmonika.minicommerce.repository.OrderRepository;
+import com.dusthakarmonika.minicommerce.repository.CartRepository;
+import com.dusthakarmonika.minicommerce.model.Cart;
+import com.dusthakarmonika.minicommerce.Exception.CartNotFoundException;
+
+
 
 import java.util.ArrayList;
 
+@Service 
+public class OrderService{
+    private final OrderRepository orderRepository;
+    private final CartRepository cartRepository;
 
-public class OrderService implements OrderOperation {
-    ArrayList<Order> list = new ArrayList<>();
-    private CartOperation cartService;
-    int choice ;
-    Payment payment;
-
-
-    public OrderService(CartOperation cartService){
-        this.cartService = cartService;
+    public OrderService(OrderRepository orderRepository,CartRepository cartRepository){
+        this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
     }
-    @Override
-    public double  placeOrder(Customer c, int choice) throws InsufficientStockException,EmptyCartException {
-        ArrayList<CartItem> cart = cartService.getCartItems(c);
-        double total = 0;
-        for (CartItem ca : cart) {
-            if (ca.getProduct().getStock() < ca.getQuantity()) {
-                throw new InsufficientStockException("Insufficient Stock");
-            }
+
+    public Cart findCartId(int cartId) throws CartNotFoundException{
+        return cartRepository.findById(cartId)
+                             .orElseThrow(() -> new CartNotFoundException("Cart not found"));
+        
+    }
+    public void validateCartItems(Cart cart){
+        if(cart.getCartItems().isEmpty()){
+            throw new RuntimeException("cart is empty");
         }
-        switch (choice) {
-            case 1:
-                payment = new UPIPayment();
-                break;
-            case 2:
-                payment = new CardPayment();
-                break;
-            case 3:
-                payment = new CashOnDelivery();
-                break;
-        }
-        payment.makePayment();
-        for (CartItem ca : cart) {
-            double itemCost = ca.getProduct().getPrice() * ca.getQuantity();
-            total = total + itemCost;
-        }
-        for (CartItem ca : cart) {
-            int stock = ca.getProduct().getStock() - ca.getQuantity();
-            ca.getProduct().setStock(stock);
-        }
-            return total;
-        }
+    }
+
+
 }
+
+
+
