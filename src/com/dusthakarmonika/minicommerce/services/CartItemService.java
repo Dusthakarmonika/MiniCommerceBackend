@@ -39,7 +39,7 @@ public class CartItemService  {
        return cartItemRepository.save(cartItem);
     }
 
-    public CartItem updateQuantity(Long cartItemId, int quantity) throws CartNotFoundException, InsufficientStockException {
+    public CartItem updateQuantity(int cartItemId, int quantity) throws CartNotFoundException, InsufficientStockException {
         CartItem cartItem = cartItemRepository.findById(cartItemId).
                             orElseThrow(() -> new CartNotFoundException("Cart Item not found"));
         cartItem.setQuantity(quantity);
@@ -50,7 +50,7 @@ public class CartItemService  {
         return cartItemRepository.save(cartItem);
     }
 
-    public void DeleteCart(Long cartItemId) throws CartNotFoundException {
+    public void DeleteCart(int cartItemId) throws CartNotFoundException {
         CartItem cartItem = cartItemRepository.findById(cartItemId).
                             orElseThrow(() -> new CartNotFoundException("Cart Item not found"));
         cartItemRepository.delete(cartItem);

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @ManyToOne
     private product Product;
