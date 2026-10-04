@@ -1,9 +1,10 @@
 package com.dusthakarmonika.minicommerce.model;
 import java.util.List;
+import java.util.ArrayList;
 
 public class CreateOrderRequest {
 private int cartId;
-private List<Integer> cartItemIds;
+private ArrayList<Integer> cartItemIds;
 
 public CreateOrderRequest(){
 
@@ -15,10 +16,10 @@ public int getCartId(){
 public void setCartId(int cartId){
     this.cartId = cartId;
 }
-public List<Integer> getCartItemIds(){
+public ArrayList<Integer> getCartItemIds(){
     return cartItemIds;
 }
-public void setCartIds(List<Integer> cartItemIds){
+public void setCartIds(ArrayList<Integer> cartItemIds){
     this.cartItemIds = cartItemIds;
 }
 }

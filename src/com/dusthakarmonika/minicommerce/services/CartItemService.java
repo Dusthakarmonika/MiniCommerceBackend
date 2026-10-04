@@ -17,7 +17,8 @@ import com.dusthakarmonika.minicommerce.Exception.CartNotFoundException;
 import com.dusthakarmonika.minicommerce.Exception.ProductNotFoundException;
 import com.dusthakarmonika.minicommerce.Exception.InsufficientStockException;
 import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
+import java.util.List;
 @Service
 public class CartItemService  {
     
@@ -54,6 +55,9 @@ public class CartItemService  {
         CartItem cartItem = cartItemRepository.findById(cartItemId).
                             orElseThrow(() -> new CartNotFoundException("Cart Item not found"));
         cartItemRepository.delete(cartItem);
+    }
+    public List<CartItem> getCartItems() throws CartNotFoundException {
+        return cartItemRepository.findAll();
     }
 
 }

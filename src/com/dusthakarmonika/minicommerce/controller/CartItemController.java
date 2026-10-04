@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.dusthakarmonika.minicommerce.model.UpdateCartItemRequest;
 import com.dusthakarmonika.minicommerce.Exception.InsufficientStockException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import java.util.List;
+import java.util.ArrayList;
 
 
 @RestController
@@ -34,13 +36,16 @@ public class CartItemController {
     }
 
     @PutMapping("/cart-items/{cartItemId}")
-    public CartItem updateQuantity(@PathVariable Long cartItemId, @RequestBody UpdateCartItemRequest request) throws CartNotFoundException, InsufficientStockException {
+    public CartItem updateQuantity(@PathVariable int cartItemId, @RequestBody UpdateCartItemRequest request) throws CartNotFoundException, InsufficientStockException {
         return cartItemService.updateQuantity(cartItemId, request.getQuantity());
     }
 
     @DeleteMapping("/cart-items/{cartItemId}")
-    public void DeleteCart(@PathVariable Long cartItemId) throws CartNotFoundException {
+    public void DeleteCart(@PathVariable int cartItemId) throws CartNotFoundException {
         cartItemService.DeleteCart(cartItemId);
     }
-
+    @GetMapping("/cart-items")
+    public List<CartItem> getAllCartItems() throws CartNotFoundException {
+        return cartItemService.getCartItems();
+    }
 }

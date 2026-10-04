@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.ArrayList;
 import com.dusthakarmonika.minicommerce.model.Customer;
 import org.springframework.transaction.annotation.Transactional;
+import com.dusthakarmonika.minicommerce.model.Order;
+import com.dusthakarmonika.minicommerce.model.product;
 
 
 
@@ -41,7 +43,7 @@ public class OrderService{
             throw new RuntimeException("cart is empty");
         }
     }
-    private List<CartItem> getSelectedCartItems(List<Integer> cartItemIds) {
+    private List<CartItem> getSelectedCartItems(ArrayList<Integer> cartItemIds) {
 
     List<CartItem> selectedItems = new ArrayList<>();
 
@@ -64,7 +66,7 @@ private OrderItems createOrderItem(CartItem cartItem) {
 
     return orderItem;
 }
-public ArrayLst<OrderItems> CreateOrderItems(ArrayList<CartItem> cartItems){
+public List<OrderItems> CreateOrderItems(List<CartItem> cartItems){
     ArrayList<OrderItems> orderItems = new ArrayList<>();
 for(CartItem cartItem : cartItems){
     OrderItems orderItem = createOrderItem(cartItem);
@@ -72,21 +74,21 @@ for(CartItem cartItem : cartItems){
 }
 return orderItems;
 }
- public void addItemsToOrder(Order order, ArrayList<OrderItems> orderItems){
-        for(OrderItems oderItem : orderItems){
+ public void addItemsToOrder(Order order,List<OrderItems> orderItems){
+        for(OrderItems orderItem : orderItems){
             orderItem.setOrder(order);
-            order.getItem().add(orderItem);
+            order.getItems().add(orderItem);
         }
     }
-    public void validateStock(ArrayList<CartItem> selectedCartItems) throws InsufficientStockException{
+    public void validateStock(List<CartItem> selectedCartItems) throws InsufficientStockException{
         for(CartItem cartItem : selectedCartItems){
             int stock = cartItem.getProduct().getStock();
-            if(cartItem.getQuantity > stock){
+            if(cartItem.getQuantity() > stock){
                 throw new InsufficientStockException("Insufficient stock");
             }
         }
     }
-    public double calculteAmount(ArrayList<CartItem> selectedCartItems){
+    public double calculateAmount(List<CartItem> selectedCartItems){
         double total = 0;
         for(CartItem cartItem : selectedCartItems){
             double price = cartItem.getProduct().getPrice();
@@ -99,16 +101,16 @@ return orderItems;
     }
 
     @Transactional
-    public Order createOrder(CreateOrderRequest request) {
-    Cart cart = findCart(request.getCartId());
+    public Order createOrder(CreateOrderRequest request) throws CartNotFoundException, InsufficientStockException {
+    Cart cart = findCartId(request.getCartId());
     validateCartItems(cart);
     List<CartItem> selectedCartItems =
             getSelectedCartItems(request.getCartItemIds());
-    double total = calculateTotal(selectedCartItems);
+    double total = calculateAmount(selectedCartItems);
     validateStock(selectedCartItems);
     Customer customer = cart.getCustomer();
-    Order order = new Order( 0, customer, new ArrayList<>(), total);
-    List<OrderItems> orderItems = createOrderItems(selectedCartItems);
+     List<OrderItems> orderItems = CreateOrderItems(selectedCartItems);
+    Order order = new Order( 0, customer, new ArrayList<>(),total);
     addItemsToOrder(order, orderItems);
     reduceStock(selectedCartItems);
     removeCartItems(cart,selectedCartItems);
@@ -121,8 +123,11 @@ int newStock = Product.getStock() - cartItem.getQuantity();
 Product.setStock(newStock);
     }
 }
-public void removeCartItems(Cart cart, ArrayList<CartItem> selectedCartItems){
+public void removeCartItems(Cart cart, List<CartItem> selectedCartItems){
     cart.getCartItems().removeAll(selectedCartItems);
+    for(CartItem cartItem : selectedCartItems){
+    cartItemRepository.delete(cartItem);
+    }
 }
 }
 

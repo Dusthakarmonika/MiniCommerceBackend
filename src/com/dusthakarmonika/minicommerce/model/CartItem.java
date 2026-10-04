@@ -5,13 +5,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.Column;
 
 
 @Entity
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id")
+    private int cartItemId;
 
     @ManyToOne
     private product Product;
@@ -48,8 +50,12 @@ public class CartItem {
     public void setQuantity(int quantity){
         this.quantity = quantity;
     }
+    public int getCartItemId(){
+        return cartItemId;
+    }
     public String toString(){
-        return "  Product : " + Product.getProductName() +
+        return "  CatItemId : "  + cartItemId +
+                "\n Product : " + Product.getProductName() +
                 "\n Cart : " + cart.getCartId() +
                 "\n Quantity : " + quantity;
     }

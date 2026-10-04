@@ -10,8 +10,10 @@ import jakarta.persistence.CascadeType;
 
 import java.util.ArrayList;
 import java.util.List;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -22,7 +24,7 @@ public class Order {
     private Customer customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private ArrayList<OrderItems> items;
+    private List<OrderItems> items;
 
     private double totalAmount;
     
@@ -31,6 +33,25 @@ public class Order {
     this.customer = customer;
     this.items = items;
     this.totalAmount = totalAmount;
+    }
+
+    public Customer getCustomer(){
+        return customer;
+    }
+    public void setCustomer(Customer customer){
+        this.customer = customer;
+    }
+    public List<OrderItems> getItems(){
+        return items;
+    }
+    public void setItems(List<OrderItems> items){
+        this.items = items;
+    }
+    public double getTotalAmount(){
+        return totalAmount;
+    }
+    public int getOrderId(){
+        return orderId;
     }
    
 }
