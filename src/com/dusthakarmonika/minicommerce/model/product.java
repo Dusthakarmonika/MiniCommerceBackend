@@ -5,6 +5,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 
 
@@ -15,8 +18,14 @@ public class product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private int productID;
+
+    @Positive
     private String productName;
+
+    @NotBlank
     private int Price;
+    
+    @PositiveOrZero
     private int Stock;
 
     public product(int productID, String productName, int Price, int Stock) {

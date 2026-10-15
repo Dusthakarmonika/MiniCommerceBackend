@@ -41,13 +41,12 @@ public class CartItemService  {
     }
 
     public CartItem updateQuantity(int cartItemId, int quantity) throws CartNotFoundException, InsufficientStockException {
-        CartItem cartItem = cartItemRepository.findById(cartItemId).
-                            orElseThrow(() -> new CartNotFoundException("Cart Item not found"));
-        cartItem.setQuantity(quantity);
-        int stock = cartItem.getProduct().getStock();
+       CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(() -> new CartNotFoundException("cart not found"));
+       int stock = cartItem.getProduct().getStock();
         if(quantity > stock){
             throw new InsufficientStockException("Insufficient stock for product: ");
         }
+        cartItem.setQuantity(quantity);
         return cartItemRepository.save(cartItem);
     }
 
