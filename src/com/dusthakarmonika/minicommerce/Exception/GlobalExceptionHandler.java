@@ -4,6 +4,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import java.util.Map;
+import java.util.HashMap;
+import org.springframework.validation.FieldError;
 
 
 @RestControllerAdvice
@@ -28,6 +32,16 @@ public class GlobalExceptionHandler {
         public ResponseEntity<String> handleEmptyCart(EmptyCartException ex){
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
+
+        @ExceptionHandler(MethodArgumentNotValidException.class)
+        public ResponseEntity<Map<String,String>> handleValidation(MethodArgumentNotValidException ex){
+         Map<String,String> errors = new HashMap<>();
+        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+           errors.put(error.getField(), error.getDefaultMessage());
+        }
+         return ResponseEntity.badRequest().body(errors);
+        }
+
     }
 
 

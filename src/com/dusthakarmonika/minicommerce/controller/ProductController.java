@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
+import jakarta.validation.Valid;
+import com.dusthakarmonika.minicommerce.DTO.UpdateStockRequest;
 
 @RestController
 public class ProductController {
@@ -30,7 +32,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<String> addProduct(@RequestBody product Product) {
+    public ResponseEntity<String> addProduct(@Valid @RequestBody product Product) {
         productServices.addProduct(Product);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body("Product added successfully");
@@ -45,10 +47,10 @@ public class ProductController {
     @PutMapping("/products/{id}")
     public ResponseEntity<String> updateStock(
             @PathVariable("id") int productId,
-            @RequestBody product Product)
+            @Valid @RequestBody UpdateStockRequest request)
             throws ProductNotFoundException {
 
-        productServices.updateProduct(productId, Product.getStock());
+        productServices.updateProduct(productId, request.getStock());
 
         return ResponseEntity.ok("Stock updated Successfully");
     }

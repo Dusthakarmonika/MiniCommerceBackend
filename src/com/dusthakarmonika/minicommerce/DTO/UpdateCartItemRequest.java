@@ -1,4 +1,4 @@
-package com.dusthakarmonika.minicommerce.model;
+package com.dusthakarmonika.minicommerce.DTO;
 
 public class UpdateCartItemRequest {
 

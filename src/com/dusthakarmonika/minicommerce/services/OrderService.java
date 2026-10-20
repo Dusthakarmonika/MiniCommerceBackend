@@ -8,7 +8,7 @@ import com.dusthakarmonika.minicommerce.model.CartItem;
 import com.dusthakarmonika.minicommerce.model.OrderItems;
 import com.dusthakarmonika.minicommerce.Exception.CartNotFoundException;
 import com.dusthakarmonika.minicommerce.repository.CartItemRepository;
-import com.dusthakarmonika.minicommerce.model.CreateOrderRequest;
+import com.dusthakarmonika.minicommerce.DTO.CreateOrderRequest;
 import com.dusthakarmonika.minicommerce.Exception.InsufficientStockException;
 import java.util.List;
 import java.util.ArrayList;

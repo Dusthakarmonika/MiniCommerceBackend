@@ -14,7 +14,7 @@ import com.dusthakarmonika.minicommerce.Exception.CartNotFoundException;
 import com.dusthakarmonika.minicommerce.Exception.ProductNotFoundException;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import com.dusthakarmonika.minicommerce.model.UpdateCartItemRequest;
+import com.dusthakarmonika.minicommerce.DTO.UpdateCartItemRequest;
 import com.dusthakarmonika.minicommerce.Exception.InsufficientStockException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import java.util.List;

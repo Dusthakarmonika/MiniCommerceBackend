@@ -3,7 +3,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dusthakarmonika.minicommerce.services.OrderService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import com.dusthakarmonika.minicommerce.model.CreateOrderRequest;
+import com.dusthakarmonika.minicommerce.DTO.CreateOrderRequest;
 import com.dusthakarmonika.minicommerce.model.Order;
 import com.dusthakarmonika.minicommerce.Exception.CartNotFoundException;
 import com.dusthakarmonika.minicommerce.Exception.InsufficientStockException;

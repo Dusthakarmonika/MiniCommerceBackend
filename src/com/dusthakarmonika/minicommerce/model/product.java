@@ -19,10 +19,10 @@ public class product {
     @Column(name = "product_id")
     private int productID;
 
-    @Positive
+    @NotBlank
     private String productName;
 
-    @NotBlank
+    @Positive
     private int Price;
     
     @PositiveOrZero

@@ -1,4 +1,4 @@
-package com.dusthakarmonika.minicommerce.model;
+package com.dusthakarmonika.minicommerce.DTO;
 import java.util.List;
 import java.util.ArrayList;
 
