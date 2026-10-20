@@ -4,6 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
+
+
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +18,12 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerID;
+
+    @NotBlank
     private String customerName;
+
+    @Email
+    @NotBlank
     private String email;
 
     public Customer(int customerID, String customerName, String email) {

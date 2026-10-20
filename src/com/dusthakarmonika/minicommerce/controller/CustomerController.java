@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import com.dusthakarmonika.minicommerce.Exception.CustomerNotFoundException;
 import java.util.List;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -28,13 +29,13 @@ public class CustomerController {
         return customerService.DisplayCustomer();
     }
     @PostMapping("/customers")
-    public ResponseEntity<String> addCustomer(@RequestBody Customer customer){
+    public ResponseEntity<String> addCustomer(@Valid @RequestBody Customer customer){
         customerService.addCustomer(customer);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body("Customer added successfully");
     }
     @PutMapping("/customers/{id}")
-    public ResponseEntity<String> updateCustomerInfo(@PathVariable("id") int customerId, @RequestBody Customer customer) throws CustomerNotFoundException {
+    public ResponseEntity<String> updateCustomerInfo(@PathVariable("id") int customerId, @Valid @RequestBody Customer customer) throws CustomerNotFoundException {
         customerService.updateCustomerInfo(customerId,customer.getCustomerName(),customer.getEmail());
         return ResponseEntity.ok("Customer information updated successfully");
     }
