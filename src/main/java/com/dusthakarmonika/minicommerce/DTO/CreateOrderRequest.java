@@ -19,7 +19,7 @@ public void setCartId(int cartId){
 public ArrayList<Integer> getCartItemIds(){
     return cartItemIds;
 }
-public void setCartIds(ArrayList<Integer> cartItemIds){
+public void setCartItemIds(ArrayList<Integer> cartItemIds){
     this.cartItemIds = cartItemIds;
 }
 }

@@ -4,8 +4,10 @@ import com.dusthakarmonika.minicommerce.repository.CartRepository;
 import com.dusthakarmonika.minicommerce.model.Cart;
 import org.springframework.stereotype.Service;
 import com.dusthakarmonika.minicommerce.repository.CustomerRepository;
-import com.dusthakarmonika.minicommerce.Exception.CustomerNotFoundException;
+
 import com.dusthakarmonika.minicommerce.model.Customer;
+import com.dusthakarmonika.minicommerce.Exception.CustomerNotFoundException;
+import com.dusthakarmonika.minicommerce.Exception.CartNotFoundException;
 
 @Service
 public class CartService {
@@ -26,11 +28,12 @@ public class CartService {
         return cartRepository.save(newCart);
     }
 
-    public Cart getCartById(int cartId) {
-        return cartRepository.findById(cartId).orElse(null);
+    public Cart getCartById(int cartId) throws CartNotFoundException {
+        return cartRepository.findById(cartId).orElseThrow(() -> new CartNotFoundException("Cart not Found"));
     }
 
-    public void deleteCart(int cartId) {
+    public void deleteCart(int cartId) throws CartNotFoundException {
+        cartRepository.findById(cartId).orElseThrow(() -> new CartNotFoundException("cart not found"));
         cartRepository.deleteById(cartId);
     }
 }

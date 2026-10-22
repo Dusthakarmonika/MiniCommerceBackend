@@ -4,6 +4,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -29,6 +30,7 @@ public int getOrderItemId() {
     return orderItemId;
 }
 
+@JsonIgnore
 public Order getOrder() {
     return order;
 }

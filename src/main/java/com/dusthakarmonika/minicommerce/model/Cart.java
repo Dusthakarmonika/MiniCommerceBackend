@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.ArrayList;
 import jakarta.persistence.CascadeType;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.persistence.CascadeType;
 
 
 
@@ -20,9 +24,11 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartId;
+
     @OneToOne
     private Customer customer;
-    @OneToMany(mappedBy = "cart")
+    
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<CartItem> cartItems = new ArrayList<>();
 
